@@ -1,0 +1,655 @@
+fileFormatVersion: 2
+guid: 198239765aa20d0499ceb47e8645c82c
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: 11500000, guid: b2a9591990af98743ba3ff7cf1000886, type: 3}
+  textureImporterSettings:
+    alphaSource: 1
+    mipMapMode: 0
+    enableMipMap: 1
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+    convertToNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+    swizzle: 50462976
+    isReadable: 0
+    streamingMipmaps: 0
+    streamingMipmapsPriority: 0
+    vTOnly: 0
+    ignoreMipmapLimit: 0
+    nPOTScale: 1
+    sRGBTexture: 1
+    spriteMode: 2
+    spriteExtrude: 1
+    spriteMeshType: 1
+    alignment: 0
+    spritePivot: {x: 0.5, y: 0.5}
+    spritePixelsToUnits: 100
+    spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+    spriteGenerateFallbackPhysicsShape: 0
+    generateCubemap: 6
+    cubemapConvolution: 0
+    seamlessCubemap: 0
+    alphaIsTransparency: 1
+    spriteTessellationDetail: -1
+    textureType: 8
+    textureShape: 1
+    singleChannelComponent: 0
+    flipbookRows: 0
+    flipbookColumns: 0
+    ignorePngGamma: 0
+    cookieMode: 0
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 0
+    wrapV: 0
+    wrapW: 0
+    normalMap: 0
+    textureFormat: 0
+    maxTextureSize: 0
+    lightmap: 0
+    compressionQuality: 0
+    linearTexture: 0
+    grayScaleToAlpha: 0
+    rGBM: 0
+    cubemapConvolutionSteps: 0
+    cubemapConvolutionExponent: 0
+    maxTextureSizeSet: 0
+    compressionQualitySet: 0
+    textureFormatSet: 0
+    applyGammaDecoding: 0
+  singleSpriteImportData:
+  - name: 
+    originalName: 
+    pivot: {x: 0, y: 0}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 0
+      y: 0
+      width: 0
+      height: 0
+    spriteID: 3113e66c8e09d30468446cf5eeb3f0af
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 0, y: 0}
+    spritePosition: {x: 0, y: 0}
+  multiSpriteImportData: []
+  layeredSpriteImportData:
+  - name: GACHA
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 3838
+      width: 678
+      height: 248
+    spriteID: aacd08d93090b7145927b79f872bea0c
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 3838}
+    spritePosition: {x: 36, y: 1656}
+  - name: MONSTER HERE NEW
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 1807
+      y: 3318
+      width: 280
+      height: 280
+    spriteID: 9c64ebdbdeeab0240b95a12593cc08b0
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 1807, y: 3318}
+    spritePosition: {x: 423, y: 557}
+  - name: image 139
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 2095
+      y: 3318
+      width: 121
+      height: 138
+    spriteID: 79e0eeaf6ce9148439f30e8fd52af2d8
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 2095, y: 3318}
+    spritePosition: {x: 595, y: 1327}
+  - name: 600UNKO
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 690
+      y: 3934
+      width: 332
+      height: 44
+    spriteID: 7e59a395da035a647abb29cf77234cb5
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 690, y: 3934}
+    spritePosition: {x: 758, y: 1374}
+  - name: 3,020
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 690
+      y: 3838
+      width: 312
+      height: 88
+    spriteID: bb30005f23584d64cba6aa3ecd4acc2e
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 690, y: 3838}
+    spritePosition: {x: 34, y: 1535}
+  - name: Press button to pull the gacha!
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 1137
+      y: 3687
+      width: 581
+      height: 132
+    spriteID: 2915584f393517c44828b4204fc22762
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 1137, y: 3687}
+    spritePosition: {x: 272, y: 670}
+  - name: 0
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 2004
+      y: 3606
+      width: 24
+      height: 32
+    spriteID: a59cf52c5955e054996415fe7347c31c
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 2004, y: 3606}
+    spritePosition: {x: 890, y: 1040}
+  - name: 'GACHA:'
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 1807
+      y: 3606
+      width: 189
+      height: 32
+    spriteID: 2b5dbeedda0509e4084015934a6fdc03
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 1807, y: 3606}
+    spritePosition: {x: 211, y: 1038}
+  - name: Button1
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 1510
+      y: 3318
+      width: 289
+      height: 277
+    spriteID: 8573f6443a63e0a4d9349d9d7b7751a7
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 1510, y: 3318}
+    spritePosition: {x: 137, y: 138}
+  - name: Button2
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 1137
+      y: 3318
+      width: 365
+      height: 361
+    spriteID: 56751d9e54cd911409054fcc1bd297d2
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 1137, y: 3318}
+    spritePosition: {x: 678, y: 88}
+  - name: GACHACONSOLE
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 1137
+      y: 2100
+      width: 1078
+      height: 1210
+    spriteID: 090ba08a04219544f8d885db73f46648
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 1137, y: 2100}
+    spritePosition: {x: 34, y: 0}
+  - name: BACKGROUND
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 1137
+      y: 4
+      width: 1124
+      height: 2088
+    spriteID: f209049cebdd2bd4ea126d3244d492a3
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 1137, y: 4}
+    spritePosition: {x: 0, y: 0}
+  - name: GRAY
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 2100
+      width: 1125
+      height: 1730
+    spriteID: 56ff07fc7833e9a4dab1617e78580bc7
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 2100}
+    spritePosition: {x: 0, y: 0}
+  - name: BACKGROUNDCOLOR
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 4
+      width: 1125
+      height: 2088
+    spriteID: 700380fbd8811d448a8ae39a3c08b1d6
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 4}
+    spritePosition: {x: 0, y: 0}
+  spriteImportData: []
+  rigSpriteImportData: []
+  sharedRigSpriteImportData: []
+  mosaicSpriteImportData: []
+  sharedRigCharacterData:
+    bones: []
+    parts: []
+    dimension: {x: 0, y: 0}
+    characterGroups: []
+    pivot: {x: 0, y: 0}
+    boneReadOnly: 0
+  characterData:
+    bones: []
+    parts: []
+    dimension: {x: 0, y: 0}
+    characterGroups: []
+    pivot: {x: 0, y: 0}
+    boneReadOnly: 0
+  platformSettings:
+  - name: DefaultTexturePlatform
+    overridden: 0
+    ignorePlatformSupport: 0
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    androidETC2FallbackOverride: 0
+  - name: Standalone
+    overridden: 0
+    ignorePlatformSupport: 0
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    androidETC2FallbackOverride: 0
+  - name: WebGL
+    overridden: 0
+    ignorePlatformSupport: 0
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    androidETC2FallbackOverride: 0
+  mosaicLayers: 1
+  characterMode: 1
+  documentPivot: {x: 0, y: 0}
+  documentAlignment: 7
+  importHiddenLayers: 1
+  layerMappingOption: 2
+  generatePhysicsShape: 0
+  paperDollMode: 0
+  keepDupilcateSpriteName: 1
+  padding: 4
+  spriteSizeExpand: 0
+  skeletonAssetReferenceID: 
+  spriteCategoryList:
+    categories: []
+  spritePackingTag: 
+  resliceFromLayer: 0
+  pSDLayerImportSetting: []
+  psdLayers:
+  - name: "\u30A2\u30FC\u30C8\u30DC\u30FC\u30C9 1"
+    spriteName: 
+    isGroup: 1
+    parentIndex: -1
+    spriteID: 741b277bb3b580947b0a666844ae2f62
+    layerID: 0
+    mosaicPosition: {x: 0, y: 0}
+    flatten: 0
+    isImported: 0
+    isVisible: 1
+  - name: GACHA
+    spriteName: GACHA
+    isGroup: 0
+    parentIndex: 0
+    spriteID: aacd08d93090b7145927b79f872bea0c
+    layerID: -84955620
+    mosaicPosition: {x: 4, y: 3838}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: 1GACHA
+    spriteName: 
+    isGroup: 1
+    parentIndex: 0
+    spriteID: 5798d13b74c3b464cbb623f22c9ff799
+    layerID: -1633225603
+    mosaicPosition: {x: 0, y: 0}
+    flatten: 0
+    isImported: 0
+    isVisible: 1
+  - name: MONSTER HERE NEW
+    spriteName: MONSTER HERE NEW
+    isGroup: 0
+    parentIndex: 2
+    spriteID: 9c64ebdbdeeab0240b95a12593cc08b0
+    layerID: 44949400
+    mosaicPosition: {x: 1807, y: 3318}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: TEXT1
+    spriteName: 
+    isGroup: 1
+    parentIndex: 0
+    spriteID: 68d7f199bc496ff449fd2664ceed7d26
+    layerID: 963548508
+    mosaicPosition: {x: 0, y: 0}
+    flatten: 0
+    isImported: 0
+    isVisible: 1
+  - name: image 139
+    spriteName: image 139
+    isGroup: 0
+    parentIndex: 4
+    spriteID: 79e0eeaf6ce9148439f30e8fd52af2d8
+    layerID: 1530166444
+    mosaicPosition: {x: 2095, y: 3318}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: 600UNKO
+    spriteName: 600UNKO
+    isGroup: 0
+    parentIndex: 4
+    spriteID: 7e59a395da035a647abb29cf77234cb5
+    layerID: -1757832135
+    mosaicPosition: {x: 690, y: 3934}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: 3,020
+    spriteName: 3,020
+    isGroup: 0
+    parentIndex: 4
+    spriteID: bb30005f23584d64cba6aa3ecd4acc2e
+    layerID: 1305090365
+    mosaicPosition: {x: 690, y: 3838}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: TEXT2
+    spriteName: 
+    isGroup: 1
+    parentIndex: 0
+    spriteID: d6b85de41b6ca0d47902078be0dafe09
+    layerID: 963548511
+    mosaicPosition: {x: 0, y: 0}
+    flatten: 0
+    isImported: 0
+    isVisible: 1
+  - name: Press button to pull the gacha!
+    spriteName: Press button to pull the gacha!
+    isGroup: 0
+    parentIndex: 8
+    spriteID: 2915584f393517c44828b4204fc22762
+    layerID: -865188637
+    mosaicPosition: {x: 1137, y: 3687}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: 0
+    spriteName: 0
+    isGroup: 0
+    parentIndex: 8
+    spriteID: a59cf52c5955e054996415fe7347c31c
+    layerID: 372029326
+    mosaicPosition: {x: 2004, y: 3606}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: 'GACHA:'
+    spriteName: 'GACHA:'
+    isGroup: 0
+    parentIndex: 8
+    spriteID: 2b5dbeedda0509e4084015934a6fdc03
+    layerID: -497967378
+    mosaicPosition: {x: 1807, y: 3606}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: Button1
+    spriteName: Button1
+    isGroup: 0
+    parentIndex: 0
+    spriteID: 8573f6443a63e0a4d9349d9d7b7751a7
+    layerID: -405817345
+    mosaicPosition: {x: 1510, y: 3318}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: Button2
+    spriteName: Button2
+    isGroup: 0
+    parentIndex: 0
+    spriteID: 56751d9e54cd911409054fcc1bd297d2
+    layerID: -405817344
+    mosaicPosition: {x: 1137, y: 3318}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: GACHACONSOLE
+    spriteName: GACHACONSOLE
+    isGroup: 0
+    parentIndex: 0
+    spriteID: 090ba08a04219544f8d885db73f46648
+    layerID: 266351783
+    mosaicPosition: {x: 1137, y: 2100}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: BACKGROUND
+    spriteName: BACKGROUND
+    isGroup: 0
+    parentIndex: 0
+    spriteID: f209049cebdd2bd4ea126d3244d492a3
+    layerID: -1812512194
+    mosaicPosition: {x: 1137, y: 4}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: GRAY
+    spriteName: GRAY
+    isGroup: 0
+    parentIndex: 0
+    spriteID: 56ff07fc7833e9a4dab1617e78580bc7
+    layerID: 1555925097
+    mosaicPosition: {x: 4, y: 2100}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: BACKGROUNDCOLOR
+    spriteName: BACKGROUNDCOLOR
+    isGroup: 0
+    parentIndex: 0
+    spriteID: 700380fbd8811d448a8ae39a3c08b1d6
+    layerID: 963045755
+    mosaicPosition: {x: 4, y: 4}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  mosaicPSDLayers: []
+  rigPSDLayers: []
+  sharedRigPSDLayers: []
+  importFileNodeState: 1
+  platformSettingsDirtyTick: 638622800676315208
+  spriteSizeExpandChanged: 0
+  generateGOHierarchy: 1
+  textureAssetName: 
+  prefabAssetName: 
+  spriteLibAssetName: 
+  skeletonAssetName: 
+  secondarySpriteTextures: []
