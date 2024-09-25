@@ -1,15 +1,17 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SocialPlatforms;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class Gacha : MonoBehaviour
 {
     private GameScript GameScript;
     private int GachaCost = 600;
-    private bool isGacha = false;
+    [NonSerialized]public bool isGacha = false;
     private int GachaCount;
     [SerializeField] GameObject StartGachaString;
     [SerializeField] TextMeshProUGUI Text_GachaCount;
@@ -96,7 +98,7 @@ public class Gacha : MonoBehaviour
 
         GameScript.Go_Back();
         GachaMonsterImage.gameObject.SetActive(false);
-        isGacha = false;
+        
         StartGachaString.SetActive(true);
     }
 
@@ -164,7 +166,8 @@ public class Gacha : MonoBehaviour
             yield return new WaitForSeconds(0.3f);
         }
 
-      
+        yield return new WaitForSeconds(0.1f);
+        isGacha = false;
     }
 
     private IEnumerator FlipMonsterImage(int num)

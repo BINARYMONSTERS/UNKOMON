@@ -35,6 +35,7 @@ public class GameScript : MonoBehaviour
 
     //ガチャ
     [SerializeField] GameObject Gacha;
+    private Gacha GachaScript;
 
     //ウォレット
     [SerializeField] GameObject Wallet;
@@ -59,6 +60,7 @@ public class GameScript : MonoBehaviour
     {
         audio = gameObject.GetComponent<AudioSource>();
         monsterDisplay = gameObject.GetComponent<MonsterDisplay>();
+        GachaScript = gameObject.GetComponent<Gacha>();
         CameraScript = gameObject.GetComponent<Camera>();
         CurrentMonster = HaveMonsters[0];
     }
@@ -144,12 +146,18 @@ public class GameScript : MonoBehaviour
 
     public void Go_Back()
     {
-        Gacha.SetActive(false);
-        Collection.SetActive(false);
-        Wallet.SetActive(false);
-        Menu.SetActive(false);
-        Camera.SetActive(false);
-        Main.SetActive(true);
+        if (!GachaScript.isGacha)
+        {
+            PlaySE(0);
+            Gacha.SetActive(false);
+            Collection.SetActive(false);
+            Wallet.SetActive(false);
+            Menu.SetActive(false);
+            Camera.SetActive(false);
+            Main.SetActive(true);
+        }
+       
+
     }
 
     public void GetPoint()
