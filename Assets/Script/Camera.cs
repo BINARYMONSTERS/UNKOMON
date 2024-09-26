@@ -1,16 +1,21 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Runtime.InteropServices;
 using TMPro;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.UI;
+
 
 public class Camera : MonoBehaviour
 {
 
     private GameScript gameScript;
     [NonSerialized]public MonstersClass CurrentMonster;
+    [SerializeField] List<UnkoData> UnkoDataList;
+    [SerializeField] List<UnkoData> UnkoDataBase;
 
     [SerializeField] GameObject UNKO_CAM;
     [SerializeField] GameObject NICE_POOP;
@@ -45,8 +50,8 @@ public class Camera : MonoBehaviour
     [SerializeField] Image UNKO_AIRESULT3_MonsterImage;
     [SerializeField] Button AiResult3Button;
 
-    public RawImage rawImage;        // �J�����f����\������RawImage
-    public AspectRatioFitter aspectFitter; // �A�X�y�N�g���������������R���|�[�l���g
+    public RawImage rawImage;        // カメラ映像を表示するRawImage
+    public AspectRatioFitter aspectFitter; // アスペクト比を自動調整するコンポーネント
 
     private WebCamTexture webCamTexture;
     public bool CanCapture = false;
@@ -95,24 +100,24 @@ public class Camera : MonoBehaviour
     
     public void CameraStart()
     {
-        // �f�o�C�X�̃J�������X�g���擾
+        // デバイスのカメラリストを取得
         WebCamDevice[] devices = WebCamTexture.devices;
 
         if (devices.Length > 0)
         {
-            // �ŏ��̃J������I���i�K�v�ɉ����đ��̃J������I���\�j
+            // 最初のカメラを選択（必要に応じて他のカメラを選択可能）
             webCamTexture = new WebCamTexture(devices[1].name);
 
-            // �J�����f����RawImage�ɕ\��
+            // カメラ映像をRawImageに表示
             rawImage.texture = webCamTexture;
             rawImage.material.mainTexture = webCamTexture;
 
-            // WebCamTexture���J�n
+            // WebCamTextureを開始
 
 
             webCamTexture.Play();
 
-            // �A�X�y�N�g�����������
+            // アスペクト比を自動調整
             if (aspectFitter != null)
             {
                 aspectFitter.aspectRatio = (float)webCamTexture.width / webCamTexture.height;
@@ -184,9 +189,9 @@ public class Camera : MonoBehaviour
     {
         while (true)
         {
-            image.sprite = CurrentMonster.images[0]; // ����A
+            image.sprite = CurrentMonster.images[0]; // 普通A
             yield return new WaitForSeconds(0.6f);
-            image.sprite = CurrentMonster.images[num]; // ����B = 1
+            image.sprite = CurrentMonster.images[num]; // 普通B = 1
             yield return new WaitForSeconds(0.6f);
         }
         
@@ -201,13 +206,13 @@ public class Camera : MonoBehaviour
         UNKO_LOADING1_Loading3.SetActive(false);
 
         float elapsedTime = 0f;
-        //2���ږڂ��A1.5�b�ň�����A�`�F�b�N�ɂȂ�
+        //2項目目が、1.5秒で一周し、チェックになる
         UNKO_LOADING1_Loading2.SetActive(true);
         while (elapsedTime < 1.5f)
         {
             UNKO_LOADING1_Loading2.transform.Rotate(0, 0, 240 * Time.deltaTime);
-            elapsedTime += Time.deltaTime; // �o�ߎ��Ԃ����Z
-            yield return null;  // ���t���[���X�V����
+            elapsedTime += Time.deltaTime; // 経過時間を加算
+            yield return null;  // 毎フレーム更新する
         }
 
         UNKO_LOADING1_Check2.SetActive(true);
@@ -215,18 +220,18 @@ public class Camera : MonoBehaviour
         elapsedTime = 0f;
         yield return new WaitForSeconds(0.1f);
 
-        //3���ږڂ��A3�b�ň�����A�`�F�b�N�ɂȂ�
+        //3項目目が、3秒で一周し、チェックになる
         UNKO_LOADING1_Loading3.SetActive(true);
         while (elapsedTime < 3f)
         {
             UNKO_LOADING1_Loading3.transform.Rotate(0, 0, 120 * Time.deltaTime);
-            elapsedTime += Time.deltaTime; // �o�ߎ��Ԃ����Z
-            yield return null;  // ���t���[���X�V����
+            elapsedTime += Time.deltaTime; // 経過時間を加算
+            yield return null;  // 毎フレーム更新する
         }
 
         UNKO_LOADING1_Check3.SetActive(true);
         
-        //�`�F�b�N�ɂȂ���0.5�b�܂��Ď��̉�ʂɑJ��
+        //チェックになって0.5秒まって次の画面に遷移
         yield return new WaitForSeconds(0.5f);
         
         Go_AiResult();
@@ -238,6 +243,8 @@ public class Camera : MonoBehaviour
         UNKO_AIRESULT.SetActive(true);
         UNKO_AIRESULT_Slider.value = 0.5f;
         UNKO_AIRESULT_OK.SetActive(false);
+        CreateData();
+        DataExport();
     }
 
     void Go_Loading2()
@@ -256,13 +263,13 @@ public class Camera : MonoBehaviour
         UNKO_LOADING2_Loading3.SetActive(false);
 
         float elapsedTime = 0f;
-        //2���ږڂ��A1.5�b�ň�����A�`�F�b�N�ɂȂ�
+        //2項目目が、1.5秒で一周し、チェックになる
         UNKO_LOADING2_Loading2.SetActive(true);
         while (elapsedTime < 1.5f)
         {
             UNKO_LOADING2_Loading2.transform.Rotate(0, 0, 240 * Time.deltaTime);
-            elapsedTime += Time.deltaTime; // �o�ߎ��Ԃ����Z
-            yield return null;  // ���t���[���X�V����
+            elapsedTime += Time.deltaTime; // 経過時間を加算
+            yield return null;  // 毎フレーム更新する
         }
 
         UNKO_LOADING2_Check2.SetActive(true);
@@ -270,18 +277,18 @@ public class Camera : MonoBehaviour
         elapsedTime = 0f;
         yield return new WaitForSeconds(0.1f);
 
-        //3���ږڂ��A3�b�ň�����A�`�F�b�N�ɂȂ�
+        //3項目目が、3秒で一周し、チェックになる
         UNKO_LOADING2_Loading3.SetActive(true);
         while (elapsedTime < 3f)
         {
             UNKO_LOADING2_Loading3.transform.Rotate(0, 0, 120 * Time.deltaTime);
-            elapsedTime += Time.deltaTime; // �o�ߎ��Ԃ����Z
-            yield return null;  // ���t���[���X�V����
+            elapsedTime += Time.deltaTime; // 経過時間を加算
+            yield return null;  // 毎フレーム更新する
         }
 
         UNKO_LOADING2_Check3.SetActive(true);
 
-        //�`�F�b�N�ɂȂ���0.5�b�܂��Ď��̉�ʂɑJ��
+        //チェックになって0.5秒まって次の画面に遷移
         yield return new WaitForSeconds(0.5f);
 
         Go_AiResult3();
@@ -304,4 +311,132 @@ public class Camera : MonoBehaviour
         }
       
     }
+    void CreateData()
+    {
+        System.Random random = new System.Random();
+
+        // StoolDataのランダム生成
+        UnkoData.StoolData newStoolData = new UnkoData.StoolData()
+        {
+            stool_id = 204888395012, // 固定の一意識別子
+            photo_url = "https://example.oi/stool/photo_1010.jpg", // 画像URL
+            unixtime = DateTimeOffset.UtcNow.ToUnixTimeSeconds(), // 現在時刻のUnixタイムスタンプ
+            location_latitude = (decimal)(35.658584 + random.NextDouble() * 0.01), // 35.658584の付近でランダム
+            location_longitude = (decimal)(139.7454316 + random.NextDouble() * 0.01), // 139.7454316の付近でランダム
+            bristol_type = random.Next(1, 8), // 1〜7のランダムな整数
+            color = new[] { "Brown", "Black", "Yellow", "Green" }[random.Next(0, 4)], // 色のランダム選択
+            texture = new[] { "Oily", "Hard", "Soft" }[random.Next(0, 3)], // 質感のランダム選択
+            floating = random.Next(0, 2) == 0, // true or falseをランダムに
+            completeness = random.Next(1, 11), // 1〜10のランダムな整数
+            stomach_condition = random.Next(1, 11), // 1〜10のランダムな整数
+            memo = null // メモはnull
+        };
+
+        // ExternalHealthcareDataのランダム生成
+        UnkoData.ExternalHealthcareData newHealthcareData = new UnkoData.ExternalHealthcareData()
+        {
+            meal_info = null, // 食事情報
+            exercise_info = null, // 運動情報
+            sleep_info = null, // 睡眠情報
+        };
+
+        // UserDataのランダム生成
+        UnkoData.UserData newUserData = new UnkoData.UserData()
+        {
+            user_id = 3199, // 固定の一意識別子
+            gender = new[] { "Male", "Female" }[random.Next(0, 2)], // 性別ランダム
+            age = random.Next(20, 51), // 20〜50のランダムな年齢
+            height = (decimal)(160 + random.NextDouble() * 20), // 160〜180cmのランダムな身長
+            weight = (decimal)(50 + random.NextDouble() * 40), // 50〜90kgのランダムな体重
+            chronic_illness = null // 慢性疾患はnull
+        };
+
+        // MappingDataのランダム生成
+        UnkoData.MappingData newMappingData = new UnkoData.MappingData()
+        {
+            stool_id = newStoolData.stool_id, // StoolDataのIDをマッピング
+            user_id = newUserData.user_id, // UserDataのIDをマッピング
+            meal_info = newHealthcareData.meal_info, // Healthcareデータから参照
+            exercise_info = newHealthcareData.exercise_info, // Healthcareデータから参照
+            sleep_info = newHealthcareData.sleep_info // Healthcareデータから参照
+        };
+
+        // 生成したデータをリストに追加
+        UnkoDataList.Add(new UnkoData()
+        {
+            stoolData = newStoolData,
+            externalHealthcareData = newHealthcareData,
+            userData = newUserData,
+            mappingData = newMappingData
+        });
+    }
+
+
+    void DataExport()
+    {
+        string json = JsonUtility.ToJson(UnkoDataList,true);
+
+        // ファイル保存先のパス (Application.persistentDataPathはプラットフォームごとに異なる安全な保存先)
+        string filePath = Application.persistentDataPath + "/unko_data.json";
+
+        // JSONデータをファイルに書き込む
+        File.WriteAllText(filePath, json);
+
+    }
+}
+
+[Serializable]
+public class UnkoData
+{
+    public StoolData stoolData; 
+    public ExternalHealthcareData externalHealthcareData; 
+    public UserData userData; 
+    public MappingData mappingData; 
+
+    [System.Serializable]
+    public class StoolData
+    {
+        public long stool_id;  // INTEGER: long型を使用し大きな数値も扱えるように
+        public string photo_url;  // VARCHAR: URLやファイルパスなのでstring型
+        public long unixtime;  // INTEGER: Unixタイムスタンプは秒単位のためlong型
+        public decimal location_latitude;  // DECIMAL: 緯度を精度高く扱うためdecimal型
+        public decimal location_longitude;  // DECIMAL: 経度を精度高く扱うためdecimal型
+        public int bristol_type;  // INTEGER: 1〜7のブリストルスケールをint型で表現
+        public string color;  // VARCHAR: 便の色（例: "Brown"）はstring型
+        public string texture;  // VARCHAR: 質感（例: "Soft"）はstring型
+        public bool floating;  // BOOLEAN: true/falseで表現
+        public int completeness;  // INTEGER: 1〜10の完全度をint型で表現
+        public int stomach_condition;  // INTEGER: 1〜10の胃の状態をint型で表現
+        public string memo;  // TEXT: 追加メモはstring型で扱う
+    }
+
+    [System.Serializable]
+    public class ExternalHealthcareData
+    {
+        public string meal_info;  // VARCHAR: 食事情報をstring型で扱う
+        public string exercise_info;  // VARCHAR: 運動情報をstring型で扱う
+        public string sleep_info;  // VARCHAR: 睡眠情報をstring型で扱う
+    }
+
+    [System.Serializable]
+    public class UserData
+    {
+        public int user_id;  // INTEGER: ユーザーの一意識別子
+        public string gender;  // VARCHAR: 性別 (例: "Male", "Female")
+        public int age;  // INTEGER: 年齢 (整数)
+        public decimal height;  // DECIMAL: 身長 (例: 160.5cmなど)
+        public decimal weight;  // DECIMAL: 体重 (例: 70.5kgなど)
+        public string chronic_illness;  // VARCHAR: 慢性疾患 (例: "糖尿病", "高血圧")
+    }
+
+    [System.Serializable]
+    public class MappingData
+    {
+        public long stool_id;  // INTEGER: 便データの一意識別子
+        public int user_id;  // INTEGER: ユーザーデータの一意識別子
+        public string meal_info;  // VARCHAR: 食事情報 (外部ヘルスケアデータの参照)
+        public string exercise_info;  // VARCHAR: 運動情報 (外部ヘルスケアデータの参照)
+        public string sleep_info;  // VARCHAR: 睡眠情報 (外部ヘルスケアデータの参照)
+    }
+
 }
