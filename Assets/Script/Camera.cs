@@ -38,6 +38,7 @@ public class Camera : MonoBehaviour
     [SerializeField] GameObject UNKO_AIRESULT_OK;
     [SerializeField] Slider UNKO_AIRESULT_Slider;
     [SerializeField] Button AiResultButton;
+    [SerializeField] TMP_InputField Text_AiResult;
 
     [SerializeField] GameObject UNKO_LOADING2;
     [SerializeField] GameObject UNKO_LOADING2_Loading2;
@@ -239,6 +240,7 @@ public class Camera : MonoBehaviour
 
     void Go_AiResult()
     {
+        Text_AiResult.text = "";
         UNKO_LOADING1 .SetActive(false);
         UNKO_AIRESULT.SetActive(true);
         UNKO_AIRESULT_Slider.value = 0.5f;

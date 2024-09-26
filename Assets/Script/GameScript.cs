@@ -108,11 +108,17 @@ public class GameScript : MonoBehaviour
 
     public void Go_Menu()
     {
+        if (monsterDisplay.isProgress)
+            return;
+
         Menu.SetActive(true);
     }
 
     public void Go_Collection()
     {
+        if (monsterDisplay.isProgress)
+            return;
+
         MonsterCard.sprite = MonsterCards[0];
         Collection.SetActive(true);
         Menu.SetActive(false);
@@ -125,18 +131,28 @@ public class GameScript : MonoBehaviour
 
     public void Go_Gacha()
     {
+        if (monsterDisplay.isProgress)
+            return;
+
         Gacha.SetActive(true);
         Menu.SetActive(false);
     }
    
     public void GO_Wallet()
     {
+        if (monsterDisplay.isProgress)
+            return;
+
         Wallet.SetActive(true);
         Menu.SetActive(false);
     }
 
     public void Go_Camera()
     {
+        if (monsterDisplay.isProgress)
+            return;
+
+
         CameraScript.CurrentMonster = CurrentMonster;
         Camera.SetActive(true);
         Main.SetActive(false);

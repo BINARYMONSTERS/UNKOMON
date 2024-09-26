@@ -12722,6 +12722,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3b0e4e90e96f434eb91082c23fbfbb7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  UnkoDataList: []
+  UnkoDataBase: []
   UNKO_CAM: {fileID: 1062695181}
   NICE_POOP: {fileID: 1894271072}
   UNKO_UPLOAD: {fileID: 1063073917}
@@ -12740,6 +12742,7 @@ MonoBehaviour:
   UNKO_AIRESULT_OK: {fileID: 1494852075}
   UNKO_AIRESULT_Slider: {fileID: 1345626473}
   AiResultButton: {fileID: 1004577279}
+  Text_AiResult: {fileID: 1234152405}
   UNKO_LOADING2: {fileID: 1268694461}
   UNKO_LOADING2_Loading2: {fileID: 349413244}
   UNKO_LOADING2_Loading3: {fileID: 66034782}
