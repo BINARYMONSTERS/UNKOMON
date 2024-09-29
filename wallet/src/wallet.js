@@ -78,7 +78,7 @@ export const createUserWallet = async () => {
 //   secretKey: number[],
 //   sol: number,
 // } | null
-export const getWallet = async () => {
+export const getUserWallet = async () => {
   // Check if the wallet is already created
   const publicKey = await loadData(WALLET_PUBLIC_KEY);
   let secretKey = await loadData(WALLET_SECRET_KEY);
