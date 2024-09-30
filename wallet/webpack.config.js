@@ -5,10 +5,10 @@ export default {
   output: {
     filename: "bundle.js",
     path: resolve("dist"),
-    library: "unkomonLibrary",
-    libraryTarget: "umd",
-    umdNamedDefine: true,
-    globalObject: "this",
+    library: {
+      name: "unkomonLibrary",
+      type: "window",
+    },
   },
   resolve: {
     fallback: {
@@ -16,5 +16,5 @@ export default {
     },
   },
   target: "web",
-  mode: "development",
+  mode: "production",
 };
