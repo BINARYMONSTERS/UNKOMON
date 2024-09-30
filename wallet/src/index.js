@@ -12,9 +12,9 @@ import { getConfig } from "./common.js";
 //  secretKey: number[],
 //  sol: number, - SOL balance
 // }
-export const getUserWallet = async () => {
+export async function getUserWallet() {
   return getUserWalletInternal();
-};
+}
 
 // Create a new user wallet
 // @return {
@@ -22,15 +22,15 @@ export const getUserWallet = async () => {
 //  secretKey: number[],
 //  sol: number, - SOL balance
 // }
-export const createUserWallet = async () => {
+export async function createUserWallet() {
   return createUserWalletInternal();
-};
+}
 
 // Mint a new monster as a NFT to a collection
 // @param name: string - Name of the monster
 // @param imageUrl: string - Image URL of the monster
 // @param attributes: { [key: string]: string } - Attributes of the monster
-export const mintMonsterNft = async (name, imageUrl, attributes) => {
+export async function mintMonsterNft(name, imageUrl, attributes) {
   const config = getConfig();
   const wallet = await getUserWallet();
   const merkleTree = await getOrCreateMerkleTree(wallet);
@@ -43,13 +43,13 @@ export const mintMonsterNft = async (name, imageUrl, attributes) => {
     imageUrl,
     attributes
   );
-};
+}
 
 // Mint a new stool data as a NFT to a collection
 // @param name: string - Name of the stool data
 // @param imageUrl: string - Image URL of the stool data
 // @param attributes: { [key: string]: string } - Attributes of the stool data
-export const mintStoolData = async (name, imageUrl, attributes) => {
+export async function mintStoolData(name, imageUrl, attributes) {
   const config = getConfig();
   const wallet = await getUserWallet();
   const merkleTree = await getOrCreateMerkleTree(wallet);
@@ -62,7 +62,7 @@ export const mintStoolData = async (name, imageUrl, attributes) => {
     imageUrl,
     attributes
   );
-};
+}
 
 const main = async () => {
   let wallet = await getUserWallet();
@@ -75,5 +75,11 @@ const main = async () => {
     level: "1",
   });
 };
+
+export function helloWorld() {
+  console.log("Hello, World!");
+}
+
+console.log("File loaded");
 
 // main();
