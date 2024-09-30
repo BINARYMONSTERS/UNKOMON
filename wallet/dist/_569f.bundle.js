@@ -6,7 +6,7 @@
  * or disable the default devtool with "devtool: false".
  * If you are looking for production-ready output files, see mode: "production" (https://webpack.js.org/configuration/mode/).
  */
-(self["webpackChunkwallet"] = self["webpackChunkwallet"] || []).push([["_569f"],{
+(self["webpackChunkUnkomonLibrary"] = self["webpackChunkUnkomonLibrary"] || []).push([["_569f"],{
 
 /***/ "?569f":
 /*!********************!*\
@@ -14,7 +14,7 @@
   \********************/
 /***/ (() => {
 
-eval("/* (ignored) */\n\n//# sourceURL=webpack://wallet/fs_(ignored)?");
+eval("/* (ignored) */\n\n//# sourceURL=webpack://UnkomonLibrary/fs_(ignored)?");
 
 /***/ })
 

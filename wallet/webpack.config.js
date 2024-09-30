@@ -5,6 +5,8 @@ export default {
   output: {
     filename: "bundle.js",
     path: resolve("dist"),
+    library: "UnkomonLibrary",
+    libraryTarget: "umd",
   },
   resolve: {
     fallback: {
