@@ -24,7 +24,9 @@ export async function getUserWallet() {
 // }
 export async function createUserWallet() {
   const wallet = await createUserWalletInternal();
-  await createMerkleTree(wallet);
+  if (wallet.sol > 0) {
+    await createMerkleTree(wallet);
+  }
   return wallet;
 }
 
@@ -65,5 +67,3 @@ export async function mintStoolData(name, imageUrl, attributes) {
     attributes
   );
 }
-
-console.log("File loaded");
