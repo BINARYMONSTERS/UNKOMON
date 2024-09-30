@@ -23,8 +23,8 @@ export async function getUserWallet() {
 //  sol: number, - SOL balance
 // }
 export async function createUserWallet() {
-  await createMerkleTree();
   const wallet = await createUserWalletInternal();
+  await createMerkleTree(wallet);
   return wallet;
 }
 
