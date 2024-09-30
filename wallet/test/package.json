@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "http-server ./public -p 8080"
+    "start": "http-server ./public -p 8081 -c-1"
   },
   "keywords": [],
   "author": "",

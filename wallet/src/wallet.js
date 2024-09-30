@@ -1,20 +1,6 @@
 import { Keypair, PublicKey, LAMPORTS_PER_SOL } from "@solana/web3.js";
-import { createUmi } from "@metaplex-foundation/umi-bundle-defaults";
-import {
-  generateSigner,
-  percentAmount,
-  keypairIdentity,
-  createSignerFromKeypair,
-} from "@metaplex-foundation/umi";
 import { getConfig, getConnection } from "./common.js";
 import { saveData, loadData } from "./storage.js";
-
-import {
-  mplTokenMetadata,
-  createV1,
-  mintV1,
-  TokenStandard,
-} from "@metaplex-foundation/mpl-token-metadata";
 
 const WALLET_PUBLIC_KEY = "walletPublicKey";
 const WALLET_SECRET_KEY = "walletSecretKey";

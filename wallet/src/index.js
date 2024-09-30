@@ -2,7 +2,7 @@ import {
   getUserWallet as getUserWalletInternal,
   createUserWallet as createUserWalletInternal,
 } from "./wallet.js";
-import { getOrCreateMerkleTree } from "./merkle-tree.js";
+import { getMerkeTree, createMerkleTree } from "./merkle-tree.js";
 import { mintToCollection } from "./nft.js";
 import { getConfig } from "./common.js";
 
@@ -23,7 +23,9 @@ export async function getUserWallet() {
 //  sol: number, - SOL balance
 // }
 export async function createUserWallet() {
-  return createUserWalletInternal();
+  await createMerkleTree();
+  const wallet = await createUserWalletInternal();
+  return wallet;
 }
 
 // Mint a new monster as a NFT to a collection
@@ -33,7 +35,7 @@ export async function createUserWallet() {
 export async function mintMonsterNft(name, imageUrl, attributes) {
   const config = getConfig();
   const wallet = await getUserWallet();
-  const merkleTree = await getOrCreateMerkleTree(wallet);
+  const merkleTree = await getMerkeTree(wallet);
   await mintToCollection(
     wallet,
     merkleTree,
@@ -52,7 +54,7 @@ export async function mintMonsterNft(name, imageUrl, attributes) {
 export async function mintStoolData(name, imageUrl, attributes) {
   const config = getConfig();
   const wallet = await getUserWallet();
-  const merkleTree = await getOrCreateMerkleTree(wallet);
+  const merkleTree = await getMerkeTree(wallet);
   await mintToCollection(
     wallet,
     merkleTree,
@@ -64,22 +66,4 @@ export async function mintStoolData(name, imageUrl, attributes) {
   );
 }
 
-const main = async () => {
-  let wallet = await getUserWallet();
-  if (!wallet) {
-    wallet = await createUserWallet();
-  }
-
-  await mintMonsterNft("Monster 1", "https://example.com/monster1.png", {
-    type: "Fire",
-    level: "1",
-  });
-};
-
-export function helloWorld() {
-  console.log("Hello, World!");
-}
-
 console.log("File loaded");
-
-// main();
