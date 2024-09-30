@@ -1,6 +1,20 @@
 import { Keypair, PublicKey, LAMPORTS_PER_SOL } from "@solana/web3.js";
+import { createUmi } from "@metaplex-foundation/umi-bundle-defaults";
+import {
+  generateSigner,
+  percentAmount,
+  keypairIdentity,
+  createSignerFromKeypair,
+} from "@metaplex-foundation/umi";
 import { getConfig, getConnection } from "./common.js";
 import { saveData, loadData } from "./storage.js";
+
+import {
+  mplTokenMetadata,
+  createV1,
+  mintV1,
+  TokenStandard,
+} from "@metaplex-foundation/mpl-token-metadata";
 
 const WALLET_PUBLIC_KEY = "walletPublicKey";
 const WALLET_SECRET_KEY = "walletSecretKey";
@@ -8,7 +22,7 @@ const WALLET_SECRET_KEY = "walletSecretKey";
 // Get balance of the wallet
 // @param secretKey: number[]
 // @return number
-const getBalance = async (srcSecretKey) => {
+export const getBalance = async (srcSecretKey) => {
   const connection = getConnection();
   const secretKey = new Uint8Array(srcSecretKey);
   const myWallet = await Keypair.fromSecretKey(secretKey);
@@ -16,12 +30,12 @@ const getBalance = async (srcSecretKey) => {
     new PublicKey(myWallet.publicKey)
   );
 
-  return walletBalance;
+  return walletBalance / LAMPORTS_PER_SOL;
 };
 
 // Add fund to the wallet
 // @param secretKey: number[]
-const addFundToWallet = async (srcSecretKey) => {
+export const addFundToWallet = async (srcSecretKey, numberOfSol = 5) => {
   // Airdrop SOL to the wallet
   console.log("Airdrop SOL to the wallet...");
 
@@ -31,7 +45,7 @@ const addFundToWallet = async (srcSecretKey) => {
 
   const fromAirDropSignature = await connection.requestAirdrop(
     new PublicKey(myWallet.publicKey),
-    2 * LAMPORTS_PER_SOL
+    numberOfSol * LAMPORTS_PER_SOL
   );
   await connection.confirmTransaction(fromAirDropSignature);
 
@@ -96,6 +110,24 @@ export const getUserWallet = async () => {
 
   return {
     ...wallet,
-    sol: balance / LAMPORTS_PER_SOL,
+    sol: balance,
+  };
+};
+
+export const createMasterWallet = async () => {
+  const keypair = Keypair.generate();
+  const wallet = {
+    publicKey: keypair.publicKey.toBase58(),
+    secretKey: Array.from(keypair.secretKey),
+  };
+
+  await addFundToWallet(wallet.secretKey);
+
+  // Get balance of the wallet
+  const balance = await getBalance(wallet.secretKey);
+
+  return {
+    ...wallet,
+    sol: balance,
   };
 };

@@ -46,6 +46,8 @@ export const getOrCreateMerkleTree = async (wallet) => {
     maxBufferSize: 64,
   });
 
+  await builder.sendAndConfirm(umi);
+
   publicKey = merkleTree.publicKey.toString();
   secretKey = Array.from(merkleTree.secretKey);
 

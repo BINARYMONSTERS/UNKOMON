@@ -1,3 +1,4 @@
+import bs58 from "bs58";
 import { mplTokenMetadata } from "@metaplex-foundation/mpl-token-metadata";
 import {
   generateSigner,
@@ -42,7 +43,7 @@ export const createCollection = async (wallet, name) => {
   const collectionUpdateAuthority = createSignerFromKeypair(umi, payerKeypair);
 
   const collectionMint = generateSigner(umi);
-  await createNft(umi, {
+  const result = await createNft(umi, {
     mint: collectionMint,
     authority: collectionUpdateAuthority,
     name: name,
@@ -50,6 +51,8 @@ export const createCollection = async (wallet, name) => {
     sellerFeeBasisPoints: percentAmount(5), // 5%
     isCollection: true,
   }).sendAndConfirm(umi);
+
+  console.log(bs58.encode(result.signature));
 
   const collectionPublicKey = collectionMint.publicKey.toString();
   const collectionSecretKey = Array.from(collectionMint.secretKey);
@@ -60,5 +63,36 @@ export const createCollection = async (wallet, name) => {
   return {
     publicKey: collectionPublicKey,
     secretKey: collectionSecretKey,
+  };
+};
+
+export const createCollectionWithoutCaching = async (wallet, name) => {
+  const config = getConfig();
+  const umi = createUmi(config.endpoint);
+
+  const secretKeyUInt8Array = new Uint8Array(wallet.secretKey);
+  const payerKeypair =
+    umi.eddsa.createKeypairFromSecretKey(secretKeyUInt8Array);
+  umi.use(keypairIdentity(payerKeypair));
+
+  umi.use(mplTokenMetadata());
+  const collectionUpdateAuthority = createSignerFromKeypair(umi, payerKeypair);
+
+  const collectionMint = generateSigner(umi);
+  const result = await createNft(umi, {
+    mint: collectionMint,
+    authority: collectionUpdateAuthority,
+    name: name,
+    uri: "https://example.com/my-collection.json",
+    sellerFeeBasisPoints: percentAmount(5), // 5%
+    isCollection: true,
+  }).sendAndConfirm(umi);
+
+  console.log(bs58.encode(result.signature));
+
+  return {
+    publicKey: collectionMint.publicKey.toString(),
+    secretKey: Array.from(collectionMint.secretKey),
+    signature: bs58.encode(result.signature),
   };
 };
