@@ -1,10 +1,18 @@
 import {
   getUserWallet as getUserWalletInternal,
   createUserWallet as createUserWalletInternal,
+  getBalance as getBalanceInternal,
 } from "./wallet.js";
 import { getMerkeTree, createMerkleTree } from "./merkle-tree.js";
 import { mintToCollection } from "./nft.js";
 import { getConfig } from "./common.js";
+
+export class BalanceNotEnoughError extends Error {
+  constructor(message) {
+    super(message);
+    this.name = "BalanceNotEnoughError";
+  }
+}
 
 // Get user wallet information
 // @return {
@@ -37,16 +45,35 @@ export async function createUserWallet() {
 export async function mintMonsterNft(name, imageUrl, attributes) {
   const config = getConfig();
   const wallet = await getUserWallet();
-  const merkleTree = await getMerkeTree(wallet);
-  await mintToCollection(
-    wallet,
-    merkleTree,
-    config.monsterCollection.tokenAddress,
-    config.masterWallet.secretKey,
-    name,
-    imageUrl,
-    attributes
-  );
+
+  const balance = await getBalanceInternal(wallet.secretKey);
+  if (balance === 0) {
+    throw new BalanceNotEnoughError("Balance is not enough to mint NFT");
+  }
+
+  let merkleTree = await getMerkeTree(wallet);
+  if (!merkleTree) {
+    merkleTree = await createMerkleTree(wallet);
+  }
+
+  let retries = 0;
+  while (retries < 3) {
+    try {
+      await mintToCollection(
+        wallet,
+        merkleTree,
+        config.monsterCollection.tokenAddress,
+        config.masterWallet.secretKey,
+        name,
+        imageUrl,
+        attributes
+      );
+      break;
+    } catch (error) {
+      console.error("Error minting NFT:", error);
+      retries++;
+    }
+  }
 }
 
 // Mint a new stool data as a NFT to a collection
@@ -56,14 +83,34 @@ export async function mintMonsterNft(name, imageUrl, attributes) {
 export async function mintStoolData(name, imageUrl, attributes) {
   const config = getConfig();
   const wallet = await getUserWallet();
-  const merkleTree = await getMerkeTree(wallet);
-  await mintToCollection(
-    wallet,
-    merkleTree,
-    config.stoolCollection.tokenAddress,
-    config.masterWallet.secretKey,
-    name,
-    imageUrl,
-    attributes
-  );
+
+  const balance = await getBalanceInternal(wallet.secretKey);
+  if (balance === 0) {
+    throw new BalanceNotEnoughError("Balance is not enough to mint NFT");
+  }
+
+  let merkleTree = await getMerkeTree(wallet);
+  if (!merkleTree) {
+    merkleTree = await createMerkleTree(wallet);
+  }
+
+  let retries = 0;
+
+  while (retries < 3) {
+    try {
+      await mintToCollection(
+        wallet,
+        merkleTree,
+        config.stoolCollection.tokenAddress,
+        config.masterWallet.secretKey,
+        name,
+        imageUrl,
+        attributes
+      );
+      break;
+    } catch (error) {
+      console.error("Error minting NFT:", error);
+      retries++;
+    }
+  }
 }
