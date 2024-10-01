@@ -1,7 +1,6 @@
-import { publicKey } from "@metaplex-foundation/umi/serializers";
 import { Connection } from "@solana/web3.js";
 
-let _connection = null;
+let _connection: Connection | null = null;
 
 export const getConfig = () => {
   return {
