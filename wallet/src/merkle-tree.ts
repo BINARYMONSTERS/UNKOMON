@@ -1,9 +1,9 @@
 import { createUmi } from "@metaplex-foundation/umi-bundle-defaults";
 import { keypairIdentity, generateSigner } from "@metaplex-foundation/umi";
 import { createTree } from "@metaplex-foundation/mpl-bubblegum";
-import { getConfig } from "./common.js";
-import { loadData, saveData } from "./storage.js";
-import { MerkleTree, Wallet } from "./type.js";
+import { getConfig } from "./common";
+import { loadData, saveData } from "./storage";
+import { MerkleTree, Wallet } from "./type";
 
 const MERKLE_TREE_PUBLIC_KEY = "merkleTreePublicKey";
 const MERKLE_TREE_SECRET_KEY = "merkleTreeSecretKey";

@@ -16,6 +16,7 @@ export const getConfig = () => {
         2, 247, 213, 65, 222, 100, 157, 108, 207, 225, 248, 107, 115, 5, 119,
         191, 64,
       ],
+      sol: 5,
     },
     monsterCollection: {
       publicKey: "8hmmwAjMC1hiePf3T4P9z4ETEcgaNsCB4WEVbuE1N8ra",

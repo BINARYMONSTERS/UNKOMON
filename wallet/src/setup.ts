@@ -1,7 +1,7 @@
 // import { createMasterWallet } from "./wallet.js";
-import { createMasterWallet, getBalance, addFundToWallet } from "./wallet.js";
-import { createCollectionWithoutCaching } from "./collection.js";
-import { getConfig } from "./common.js";
+import { createMasterWallet, getBalance, addFundToWallet } from "./wallet";
+import { createCollectionWithoutCaching } from "./collection";
+import { getConfig } from "./common";
 
 const main = async () => {
   const config = getConfig();

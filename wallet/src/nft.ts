@@ -7,8 +7,8 @@ import {
 } from "@metaplex-foundation/umi";
 import { mintToCollectionV1 } from "@metaplex-foundation/mpl-bubblegum";
 
-import { getConfig } from "./common.js";
-import { MerkleTree, Wallet } from "./type.js";
+import { getConfig } from "./common";
+import { MerkleTree, Wallet } from "./type";
 
 // Mint a new NFT to a collection
 // @param wallet: { secretKey: number[] }

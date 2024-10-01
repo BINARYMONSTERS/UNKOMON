@@ -1,7 +1,7 @@
 import { Keypair, PublicKey, LAMPORTS_PER_SOL } from "@solana/web3.js";
-import { getConfig, getConnection } from "./common.js";
-import { saveData, loadData } from "./storage.js";
-import { Wallet } from "./type.js";
+import { getConfig, getConnection } from "./common";
+import { saveData, loadData } from "./storage";
+import { Wallet } from "./type";
 
 const WALLET_PUBLIC_KEY = "walletPublicKey";
 const WALLET_SECRET_KEY = "walletSecretKey";

@@ -8,7 +8,6 @@
     "dev": "node ./build/server.js",
     "start": "tsc && npm run dev"
   },
-  "type": "module",
   "keywords": [],
   "author": "",
   "license": "ISC",

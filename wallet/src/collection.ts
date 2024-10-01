@@ -8,8 +8,9 @@ import {
 } from "@metaplex-foundation/umi";
 import { createUmi } from "@metaplex-foundation/umi-bundle-defaults";
 import { createNft } from "@metaplex-foundation/mpl-token-metadata";
-import { saveData, loadData } from "./storage.js";
-import { getConfig } from "./common.js";
+import { saveData, loadData } from "./storage";
+import { getConfig } from "./common";
+import { Collection, Wallet } from "./type";
 
 const COLLECTION_PUBLIC_KEY = "collectionPublicKey";
 const COLLECTION_SECRET_KEY = "collectionSecretKey";
@@ -20,7 +21,10 @@ const COLLECTION_SECRET_KEY = "collectionSecretKey";
 //   publicKey: string,
 //   secretKey: string,
 // }
-export const createCollection = async (wallet, name) => {
+export const createCollection = async (
+  wallet: Wallet,
+  name: string
+): Promise<Collection> => {
   // Load collection info from storage
   let publicKey = await loadData(COLLECTION_PUBLIC_KEY);
   let secretKey = await loadData(COLLECTION_SECRET_KEY);
@@ -66,7 +70,10 @@ export const createCollection = async (wallet, name) => {
   };
 };
 
-export const createCollectionWithoutCaching = async (wallet, name) => {
+export const createCollectionWithoutCaching = async (
+  wallet: Wallet,
+  name: string
+) => {
   const config = getConfig();
   const umi = createUmi(config.endpoint);
 

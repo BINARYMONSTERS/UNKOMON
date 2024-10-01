@@ -8,3 +8,8 @@ export type MerkleTree = {
   publicKey: string;
   secretKey: number[];
 };
+
+export type Collection = {
+  publicKey: string;
+  secretKey: number[];
+};
