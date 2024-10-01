@@ -1,0 +1,17 @@
+"After downloading this project, open the command prompt or terminal in the following folder:
+
+UNKOON → wallet (here)
+
+Place the server.js file in this location. Then, execute the following commands."
+
+1.Install Express: Open your terminal and run the following command to install Express:
+
+Enter the following in the command prompt or terminal.
+
+npm install express
+
+2.Start the Server: After installing Express, you can start your server with:
+
+Enter the following in the command prompt or terminal.
+
+node server.js
