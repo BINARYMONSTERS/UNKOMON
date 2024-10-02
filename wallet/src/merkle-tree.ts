@@ -1,8 +1,9 @@
 import { createUmi } from "@metaplex-foundation/umi-bundle-defaults";
 import { keypairIdentity, generateSigner } from "@metaplex-foundation/umi";
 import { createTree } from "@metaplex-foundation/mpl-bubblegum";
-import { getConfig } from "./common.js";
-import { loadData, saveData } from "./storage.js";
+import { getConfig } from "./common";
+import { loadData, saveData } from "./storage";
+import { MerkleTree, Wallet } from "./type";
 
 const MERKLE_TREE_PUBLIC_KEY = "merkleTreePublicKey";
 const MERKLE_TREE_SECRET_KEY = "merkleTreeSecretKey";
@@ -33,7 +34,7 @@ export const getMerkeTree = async () => {
 //   publicKey: string,
 //   secretKey: string,
 // }
-export const createMerkleTree = async (wallet) => {
+export const createMerkleTree = async (wallet: Wallet): Promise<MerkleTree> => {
   const config = getConfig();
   const umi = createUmi(config.endpoint);
 
@@ -54,8 +55,8 @@ export const createMerkleTree = async (wallet) => {
 
   await builder.sendAndConfirm(umi);
 
-  publicKey = merkleTree.publicKey.toString();
-  secretKey = Array.from(merkleTree.secretKey);
+  const publicKey = merkleTree.publicKey.toString();
+  const secretKey = Array.from(merkleTree.secretKey);
 
   await saveData(MERKLE_TREE_PUBLIC_KEY, publicKey);
   await saveData(MERKLE_TREE_SECRET_KEY, secretKey);

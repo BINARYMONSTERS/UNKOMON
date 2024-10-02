@@ -4,12 +4,11 @@ import {
   createSignerFromKeypair,
   keypairIdentity,
   publicKey,
-  none,
-  percentAmount,
 } from "@metaplex-foundation/umi";
-import { mintToCollectionV1, mintV1 } from "@metaplex-foundation/mpl-bubblegum";
+import { mintToCollectionV1 } from "@metaplex-foundation/mpl-bubblegum";
 
-import { getConfig } from "./common.js";
+import { getConfig } from "./common";
+import { MerkleTree, Wallet } from "./type";
 
 // Mint a new NFT to a collection
 // @param wallet: { secretKey: number[] }
@@ -17,13 +16,13 @@ import { getConfig } from "./common.js";
 // @param collectionPublicKey: string
 // @param collectionOwnerSecretKey: number[]
 export const mintToCollection = async (
-  wallet,
-  merkleTreeInfo,
-  collectionPublicKey,
-  collectionOwnerSecretKey,
-  name,
-  assertUrl,
-  attributes
+  wallet: Wallet,
+  merkleTreeInfo: MerkleTree,
+  collectionPublicKey: string,
+  collectionOwnerSecretKey: number[],
+  name: string,
+  assertUrl: string,
+  attributes: Record<string, string> = {}
 ) => {
   const config = getConfig();
 

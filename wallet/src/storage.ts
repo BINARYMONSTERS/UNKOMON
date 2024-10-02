@@ -1,5 +1,11 @@
 class Storage {
-  constructor(filePath = "storage.json") {
+  private initialized: boolean;
+  private storageType: "browser" | "file";
+  private filePath?: string;
+  private data: Record<string, any>;
+  private fs?: typeof import("fs");
+
+  constructor(filePath: string = "storage.json") {
     console.log(
       "Running in:",
       typeof window === "undefined" ? "Node.js" : "Browser"
@@ -10,6 +16,7 @@ class Storage {
     if (this._isBrowser()) {
       this.storageType = "browser";
       this.initialized = true; // No need to load fs in the browser
+      this.data = {};
     } else {
       this.storageType = "file";
       this.filePath = filePath;
@@ -20,8 +27,8 @@ class Storage {
         this.initialized = true; // Set to true when fs is loaded
 
         // Load data from file if it exists
-        if (this.fs && this.fs.existsSync(this.filePath)) {
-          const fileContent = this.fs.readFileSync(this.filePath, "utf-8");
+        if (this.fs && this.fs.existsSync(this.filePath!)) {
+          const fileContent = this.fs.readFileSync(this.filePath!, "utf-8");
           try {
             this.data = JSON.parse(fileContent);
           } catch (error) {
@@ -33,10 +40,10 @@ class Storage {
     }
   }
 
-  async _loadFsModule() {
+  private async _loadFsModule(): Promise<void> {
     if (typeof window === "undefined") {
       try {
-        this.fs = await import("fs"); // Store fs as a property of the class instance
+        this.fs = await import("fs");
         console.log("fs module loaded successfully");
       } catch (err) {
         console.error("Error importing fs:", err);
@@ -45,7 +52,7 @@ class Storage {
   }
 
   // Set key-value pair
-  async set(key, value) {
+  public async set(key: string, value: any): Promise<void> {
     await this._waitForInitialization(); // Wait until initialized
 
     if (this.storageType === "browser") {
@@ -57,7 +64,7 @@ class Storage {
   }
 
   // Get value by key
-  async get(key) {
+  public async get(key: string): Promise<any> {
     await this._waitForInitialization(); // Wait until initialized
 
     if (this.storageType === "browser") {
@@ -69,7 +76,7 @@ class Storage {
   }
 
   // Remove key-value pair
-  async remove(key) {
+  public async remove(key: string): Promise<void> {
     await this._waitForInitialization(); // Wait until initialized
 
     if (this.storageType === "browser") {
@@ -81,11 +88,11 @@ class Storage {
   }
 
   // Save data to file
-  _saveToFile() {
+  private _saveToFile(): void {
     if (this.fs) {
       // Ensure fs is loaded before using it
       this.fs.writeFileSync(
-        this.filePath,
+        this.filePath!,
         JSON.stringify(this.data, null, 2),
         "utf-8"
       );
@@ -95,7 +102,7 @@ class Storage {
   }
 
   // Wait until the storage is initialized
-  _waitForInitialization() {
+  private _waitForInitialization(): Promise<void> {
     return new Promise((resolve) => {
       const checkInitialization = setInterval(() => {
         if (this.initialized) {
@@ -107,7 +114,7 @@ class Storage {
   }
 
   // Check if the environment is a browser
-  _isBrowser() {
+  private _isBrowser(): boolean {
     return typeof window !== "undefined" && typeof localStorage !== "undefined";
   }
 }
@@ -115,14 +122,14 @@ class Storage {
 // Create an instance of Storage
 const storage = new Storage();
 
-export const saveData = async (key, value) => {
+export const saveData = async (key: string, value: any): Promise<void> => {
   return await storage.set(key, value);
 };
 
-export const loadData = async (key) => {
+export const loadData = async (key: string): Promise<any> => {
   return await storage.get(key);
 };
 
-export const removeData = async (key) => {
+export const removeData = async (key: string): Promise<void> => {
   return await storage.remove(key);
 };

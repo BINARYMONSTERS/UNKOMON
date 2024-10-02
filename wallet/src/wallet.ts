@@ -1,6 +1,7 @@
 import { Keypair, PublicKey, LAMPORTS_PER_SOL } from "@solana/web3.js";
-import { getConfig, getConnection } from "./common.js";
-import { saveData, loadData } from "./storage.js";
+import { getConfig, getConnection } from "./common";
+import { saveData, loadData } from "./storage";
+import { Wallet } from "./type";
 
 const WALLET_PUBLIC_KEY = "walletPublicKey";
 const WALLET_SECRET_KEY = "walletSecretKey";
@@ -8,7 +9,7 @@ const WALLET_SECRET_KEY = "walletSecretKey";
 // Get balance of the wallet
 // @param secretKey: number[]
 // @return number
-export const getBalance = async (srcSecretKey) => {
+export const getBalance = async (srcSecretKey: number[]) => {
   const connection = getConnection();
   const secretKey = new Uint8Array(srcSecretKey);
   const myWallet = await Keypair.fromSecretKey(secretKey);
@@ -21,7 +22,10 @@ export const getBalance = async (srcSecretKey) => {
 
 // Add fund to the wallet
 // @param secretKey: number[]
-export const addFundToWallet = async (srcSecretKey, numberOfSol = 5) => {
+export const addFundToWallet = async (
+  srcSecretKey: number[],
+  numberOfSol: number = 5
+) => {
   // Airdrop SOL to the wallet
   console.log("Airdrop SOL to the wallet...");
 
@@ -46,7 +50,7 @@ export const addFundToWallet = async (srcSecretKey, numberOfSol = 5) => {
 //   secretKey: number[],
 //   sol: number,
 // }
-export const createUserWallet = async () => {
+export const createUserWallet = async (): Promise<Wallet> => {
   const config = getConfig();
   const keypair = Keypair.generate();
   const wallet = {
@@ -78,7 +82,7 @@ export const createUserWallet = async () => {
 //   secretKey: number[],
 //   sol: number,
 // } | null
-export const getUserWallet = async () => {
+export const getUserWallet = async (): Promise<Wallet | null> => {
   // Check if the wallet is already created
   const publicKey = await loadData(WALLET_PUBLIC_KEY);
   let secretKey = await loadData(WALLET_SECRET_KEY);
@@ -100,7 +104,7 @@ export const getUserWallet = async () => {
   };
 };
 
-export const createMasterWallet = async () => {
+export const createMasterWallet = async (): Promise<Wallet> => {
   const keypair = Keypair.generate();
   const wallet = {
     publicKey: keypair.publicKey.toBase58(),
