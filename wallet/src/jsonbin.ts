@@ -5,7 +5,7 @@ import axios, {
 } from "axios";
 import { getConfig } from "./common";
 
-const BASE_URL = "https://api.jsonbin.io/v3 ";
+const BASE_URL = "https://api.jsonbin.io/v3";
 const config = getConfig();
 
 const client = axios.create({
@@ -28,10 +28,21 @@ type JsonBinResponse = {
 };
 
 export const uploadJson = async (
-  data: Record<string, string>
+  name: string,
+  description: string,
+  imageUrl: string,
+  attributes: Record<string, string>
 ): Promise<string> => {
+  const jsonBody = {
+    name: name,
+    description: description,
+    image: imageUrl,
+    external_url: imageUrl,
+    attributes: attributes,
+  };
+
   try {
-    const response = await client.post<JsonBinResponse>("/b", data, {
+    const response = await client.post<JsonBinResponse>("/b", jsonBody, {
       headers: header(config.jsonbinAccessKey),
     });
     return `${BASE_URL}/b/${response.data.metadata.id}`;

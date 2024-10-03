@@ -6,9 +6,9 @@ import {
   publicKey,
 } from "@metaplex-foundation/umi";
 import { mintToCollectionV1 } from "@metaplex-foundation/mpl-bubblegum";
-
 import { getConfig } from "./common";
 import { MerkleTree, Wallet } from "./type";
+import { uploadJson } from "./jsonbin";
 
 // Mint a new NFT to a collection
 // @param wallet: { secretKey: number[] }
@@ -24,6 +24,9 @@ export const mintToCollection = async (
   assertUrl: string,
   attributes: Record<string, string> = {}
 ) => {
+  // Generate and upload JSON metadata
+  const jsonUrl = await uploadJson(name, name, assertUrl, attributes);
+
   const config = getConfig();
 
   const umi = createUmi(config.endpoint);
@@ -48,7 +51,7 @@ export const mintToCollection = async (
     collectionAuthority: collectionUpdateAuthority,
     metadata: {
       name: name,
-      uri: "https://nftstorage.link/ipfs/bafkreidk3rfovtx4uehivgp7tmruoiaqkypproymlfzzpgeyayqcbfakma",
+      uri: jsonUrl,
       sellerFeeBasisPoints: 500, // 5%
       collection: { key: collectionMint, verified: true },
       creators: [
