@@ -8,6 +8,7 @@ const getConfig = () => {
         endpoint: "https://api.devnet.solana.com", // Replace by test nest when demonstrating
         isDemo: true,
         nftStorageApiKey: "f3463a4d.5dad3c2efd6b47b08b5b73ad6920aa7c",
+        jsonbinAccessKey: "$2a$10$DgJAmvvt6mjOqXLzJ7ELrO4sZVcROz7xB6Y.OApmejYyxUh5TIkOK",
         masterWallet: {
             publicKey: "ARAUZUHBikSY8dNGEVhRPS6u6pyykvbgyvQK2Vy285Td",
             secretKey: [

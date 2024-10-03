@@ -32,6 +32,9 @@ dependencies:
   '@solana/web3.js':
     specifier: ^1.91.7
     version: 1.95.3
+  axios:
+    specifier: ^1.7.7
+    version: 1.7.7
   bs58:
     specifier: ^5.0.0
     version: 5.0.0
