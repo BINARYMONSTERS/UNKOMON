@@ -17,10 +17,10 @@ const test = async () => {
     defense: "50",
   });
 
-  await mintStoolData("Stool", "https://stool.com/image.png", {
-    color: "brown",
-    smell: "bad",
-  });
+  // await mintStoolData("Stool", "https://stool.com/image.png", {
+  //   color: "brown",
+  //   smell: "bad",
+  // });
 };
 
 test();

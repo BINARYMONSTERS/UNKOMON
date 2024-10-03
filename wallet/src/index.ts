@@ -1,3 +1,7 @@
+import * as dotenv from "dotenv";
+// Read environment variables from .env file
+dotenv.config();
+
 import {
   getUserWallet as getUserWalletInternal,
   createUserWallet as createUserWalletInternal,
