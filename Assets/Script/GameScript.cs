@@ -11,9 +11,10 @@ public class GameScript : MonoBehaviour
     private AudioSource audio;
     [SerializeField] List<AudioClip> SEs;
     public MonsterDisplay monsterDisplay;
-    private Camera CameraScript;
+    private CameraScript CameraScript;
     //メイン
     public GameObject Main;
+    [SerializeField] GameObject NoWallet;
     public int UnkoPoint = 0;
     public int ExpPoint = 20340;
     private const int MaxExpPoint = 48000;
@@ -32,6 +33,9 @@ public class GameScript : MonoBehaviour
     [SerializeField] GameObject Collection;
     [SerializeField] List<Sprite> MonsterCards;
     [SerializeField] Image MonsterCard;
+    [SerializeField] GameObject ChooseChain;
+    [SerializeField] GameObject NoGAS;
+    private int currentID = 0;
 
     //ガチャ
     [SerializeField] GameObject Gacha;
@@ -39,6 +43,9 @@ public class GameScript : MonoBehaviour
 
     //ウォレット
     [SerializeField] GameObject Wallet;
+    [SerializeField] GameObject CreateWallet;
+    public bool isCreatedWallet = false;
+    private WalletScript WalletScript;
 
     //カメラ
     [SerializeField] GameObject Camera;
@@ -61,8 +68,12 @@ public class GameScript : MonoBehaviour
         audio = gameObject.GetComponent<AudioSource>();
         monsterDisplay = gameObject.GetComponent<MonsterDisplay>();
         GachaScript = gameObject.GetComponent<Gacha>();
-        CameraScript = gameObject.GetComponent<Camera>();
+        CameraScript = gameObject.GetComponent<CameraScript>();
+        WalletScript = gameObject.GetComponent<WalletScript>();
         CurrentMonster = HaveMonsters[0];
+
+        WalletScript.GetWalletInfo();
+
     }
 
     // Update is called once per frame
@@ -124,8 +135,46 @@ public class GameScript : MonoBehaviour
         Menu.SetActive(false);
     }
 
+    public void MonsterMint()
+    {
+        if (!isCreatedWallet)
+        {
+            Collection.SetActive(false);
+            NoWallet.SetActive(true);
+            return;
+        }
+
+        ChooseChain.SetActive(true);
+
+    }
+
+    public void SendSolana()
+    {
+        
+        string attributes = "HP:" + AllMonsters[currentID].HP + " PoopRate:" + AllMonsters[currentID].PoopRate;
+        WalletScript.MintMonsterNFT(AllMonsters[currentID].ID.ToString(), AllMonsters[currentID].ImageURL.ToString(), attributes);
+        Debug.Log(attributes);
+        ChooseChain.SetActive(false);
+
+        if(WalletScript.SuccessMonsterMint == true)
+        {
+            return;
+        }
+        else
+        {
+            NoGAS.SetActive(true) ;
+        }
+    }
+
+    public void SendSonic()
+    {
+        ChooseChain.SetActive(false);
+    }
+
+
     public void SetMonsterCard(int ID)
     {
+        currentID = ID;
         MonsterCard.sprite = MonsterCards[ID];
     }
 
@@ -143,8 +192,20 @@ public class GameScript : MonoBehaviour
         if (monsterDisplay.isProgress)
             return;
 
+        if (isCreatedWallet)
+            WalletScript.GetWalletInfo();
+
         Wallet.SetActive(true);
+        CreateWallet.SetActive(!isCreatedWallet);
+        NoGAS.SetActive(false);
+        NoWallet.SetActive(false);
         Menu.SetActive(false);
+    }
+
+    public void CreatedWallet()
+    {
+        CreateWallet.SetActive(false );
+        isCreatedWallet = true;
     }
 
     public void Go_Camera()
@@ -152,6 +213,11 @@ public class GameScript : MonoBehaviour
         if (monsterDisplay.isProgress)
             return;
 
+        if (!isCreatedWallet)
+        {
+            NoWallet.SetActive(true);
+            return;
+        }
 
         CameraScript.CurrentMonster = CurrentMonster;
         Camera.SetActive(true);
@@ -167,9 +233,12 @@ public class GameScript : MonoBehaviour
             PlaySE(0);
             Gacha.SetActive(false);
             Collection.SetActive(false);
+            NoGAS.SetActive(false);
             Wallet.SetActive(false);
+            CreateWallet.SetActive(false);
             Menu.SetActive(false);
             Camera.SetActive(false);
+            NoWallet.SetActive(false);
             Main.SetActive(true);
         }
        
@@ -203,8 +272,9 @@ public class MonstersClass
     public int HP;
     public int MaxHP;
     public int CP;
+    public float PoopRate;
     public int GachaPercent;
     public int ProgressID;
     public Sprite[] images;
-
+    public string ImageURL;
 }

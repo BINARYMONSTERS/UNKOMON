@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>websocket-sharp-latest</id>
+    <version>1.0.2</version>
+    <authors>websocket-sharp-latest</authors>
+    <license type="expression">MIT</license>
+    <licenseUrl>https://licenses.nuget.org/MIT</licenseUrl>
+    <icon>websocket-sharp_icon.png</icon>
+    <description>Package Description</description>
+    <releaseNotes>https://github.com/garbles-labs/websocket-sharp/releases</releaseNotes>
+    <repository type="git" />
+    <dependencies>
+      <group targetFramework=".NETStandard2.0" />
+    </dependencies>
+  </metadata>
+</package>

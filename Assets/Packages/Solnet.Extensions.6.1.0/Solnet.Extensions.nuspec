@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
+  <metadata>
+    <id>Solnet.Extensions</id>
+    <version>6.1.0</version>
+    <authors>blockmountain</authors>
+    <license type="expression">MIT</license>
+    <licenseUrl>https://licenses.nuget.org/MIT</licenseUrl>
+    <icon>icon.png</icon>
+    <description>Solnet is Solana's .NET integration library.</description>
+    <releaseNotes>https://github.com/bmresearch/Solnet/releases</releaseNotes>
+    <copyright>Copyright 2022 © Solnet</copyright>
+    <tags>solana solnet sol net5 spl</tags>
+    <repository type="git" url="https://github.com/bmresearch/Solnet" />
+    <dependencies>
+      <group targetFramework="net6.0">
+        <dependency id="Solnet.Programs" version="6.1.0" exclude="Build,Analyzers" />
+        <dependency id="Solnet.Rpc" version="6.1.0" exclude="Build,Analyzers" />
+        <dependency id="Solnet.Wallet" version="6.1.0" exclude="Build,Analyzers" />
+      </group>
+    </dependencies>
+  </metadata>
+</package>

@@ -18,12 +18,15 @@ const umi_bundle_defaults_1 = require("@metaplex-foundation/umi-bundle-defaults"
 const umi_1 = require("@metaplex-foundation/umi");
 const mpl_bubblegum_1 = require("@metaplex-foundation/mpl-bubblegum");
 const common_1 = require("./common");
+const jsonbin_1 = require("./jsonbin");
 // Mint a new NFT to a collection
 // @param wallet: { secretKey: number[] }
 // @param merkleTreeInfo: { publicKey: string, secretKey: number[] }
 // @param collectionPublicKey: string
 // @param collectionOwnerSecretKey: number[]
 const mintToCollection = (wallet_1, merkleTreeInfo_1, collectionPublicKey_1, collectionOwnerSecretKey_1, name_1, assertUrl_1, ...args_1) => __awaiter(void 0, [wallet_1, merkleTreeInfo_1, collectionPublicKey_1, collectionOwnerSecretKey_1, name_1, assertUrl_1, ...args_1], void 0, function* (wallet, merkleTreeInfo, collectionPublicKey, collectionOwnerSecretKey, name, assertUrl, attributes = {}) {
+    // Generate and upload JSON metadata
+    const jsonUrl = yield (0, jsonbin_1.uploadJson)(name, name, assertUrl, attributes);
     const config = (0, common_1.getConfig)();
     const umi = (0, umi_bundle_defaults_1.createUmi)(config.endpoint);
     const secretKeyUInt8Array = new Uint8Array(wallet.secretKey);
@@ -40,7 +43,7 @@ const mintToCollection = (wallet_1, merkleTreeInfo_1, collectionPublicKey_1, col
         collectionAuthority: collectionUpdateAuthority,
         metadata: {
             name: name,
-            uri: "https://nftstorage.link/ipfs/bafkreidk3rfovtx4uehivgp7tmruoiaqkypproymlfzzpgeyayqcbfakma",
+            uri: jsonUrl,
             sellerFeeBasisPoints: 500, // 5%
             collection: { key: collectionMint, verified: true },
             creators: [
