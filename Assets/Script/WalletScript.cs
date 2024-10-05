@@ -8,7 +8,7 @@ using UnityEngine.Networking;
 public class WalletScript : MonoBehaviour
 {
     private GameScript GameScript;
-    public bool? SuccessMonsterMint = null;
+    public bool SuccessMonsterMint = true;
     public WalletInfo walletInfo;
     [SerializeField] TextMeshProUGUI Text_PublicKey;
     [SerializeField] TextMeshProUGUI Text_SOL;
@@ -20,14 +20,13 @@ public class WalletScript : MonoBehaviour
 
     }
 
-    public void MintMonsterNFT(string name, string imageUrl, string attributesJson)
+    public IEnumerator MintMonsterNFT(string name, string imageUrl, string attributesJson)
     {
-        StartCoroutine(MintMonsterNFTCoroutine(name, imageUrl, attributesJson));
+        yield return MintMonsterNFTCoroutine(name, imageUrl, attributesJson);
     }
 
     IEnumerator MintMonsterNFTCoroutine(string name, string imageUrl, string attributesJson)
     {
-        SuccessMonsterMint = null;
         string url = "http://localhost:3000/api/mint-monster";
         WWWForm form = new WWWForm();
         form.AddField("name", name);

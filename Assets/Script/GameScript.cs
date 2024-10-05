@@ -150,19 +150,19 @@ public class GameScript : MonoBehaviour
 
     public void SendSolana()
     {
-        
+        StartCoroutine(Solana());
+    }
+
+    IEnumerator Solana()
+    {
         string attributes = "HP:" + AllMonsters[currentID].HP + " PoopRate:" + AllMonsters[currentID].PoopRate;
-        WalletScript.MintMonsterNFT(AllMonsters[currentID].ID.ToString(), AllMonsters[currentID].ImageURL.ToString(), attributes);
+        yield return WalletScript.MintMonsterNFT(AllMonsters[currentID].ID.ToString(), AllMonsters[currentID].ImageURL.ToString(), attributes);
         Debug.Log(attributes);
         ChooseChain.SetActive(false);
 
-        if(WalletScript.SuccessMonsterMint == true || WalletScript.SuccessMonsterMint ==null)
+        if (WalletScript.SuccessMonsterMint == false)
         {
-            return;
-        }
-        else
-        {
-            NoGAS.SetActive(true) ;
+            NoGAS.SetActive(true);
         }
     }
 
