@@ -10,7 +10,7 @@ import { createUmi } from "@metaplex-foundation/umi-bundle-defaults";
 import { createNft } from "@metaplex-foundation/mpl-token-metadata";
 import { saveData, loadData } from "./storage";
 import { getConfig } from "./common";
-import { Collection, Wallet } from "./type";
+import { ChainType, Collection, Wallet } from "./type";
 
 const COLLECTION_PUBLIC_KEY = "collectionPublicKey";
 const COLLECTION_SECRET_KEY = "collectionSecretKey";
@@ -72,10 +72,13 @@ export const createCollection = async (
 
 export const createCollectionWithoutCaching = async (
   wallet: Wallet,
-  name: string
+  name: string,
+  chainType: ChainType = "solana"
 ) => {
   const config = getConfig();
-  const umi = createUmi(config.endpoint);
+  const umi = createUmi(
+    chainType === "solana" ? config.endpoint : config.sonicEndpoint
+  );
 
   const secretKeyUInt8Array = new Uint8Array(wallet.secretKey);
   const payerKeypair =

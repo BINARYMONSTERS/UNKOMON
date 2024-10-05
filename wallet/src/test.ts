@@ -10,6 +10,7 @@ const test = async () => {
   if (!wallet) {
     wallet = await createUserWallet();
   }
+
   console.log("Wallet:", wallet);
 
   await mintMonsterNft("Monster", "https://monster.com/image.png", {
@@ -17,10 +18,10 @@ const test = async () => {
     defense: "50",
   });
 
-  // await mintStoolData("Stool", "https://stool.com/image.png", {
-  //   color: "brown",
-  //   smell: "bad",
-  // });
+  await mintStoolData("Stool", "https://stool.com/image.png", {
+    color: "brown",
+    smell: "bad",
+  });
 };
 
 test();

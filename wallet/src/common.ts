@@ -1,7 +1,5 @@
 import { Connection } from "@solana/web3.js";
 
-let _connection: Connection | null = null;
-
 export const getConfig = () => {
   const masterWalletSecretKey = process.env.MASTER_WALLET_SECRET_KEY;
   if (!masterWalletSecretKey) {
@@ -20,8 +18,7 @@ export const getConfig = () => {
 
   return {
     endpoint: process.env.SOLANA_ENDPOINT || "https://api.devnet.solana.com",
-    sonicEndpoint:
-      process.env.SONIC_ENDPOINT || "https://rpc.testnet.soniclabs.com/",
+    sonicEndpoint: process.env.SONIC_ENDPOINT || "https://devnet.sonic.game",
     isDemo: true,
     nftStorageApiKey: nftStorageApiKey,
     jsonbinAccessKey: jsonbinAccessKey,
@@ -39,6 +36,7 @@ export const getConfig = () => {
   };
 };
 
+let _connection: Connection | null = null;
 export const getConnection = () => {
   if (_connection) {
     return _connection;
@@ -50,4 +48,14 @@ export const getConnection = () => {
 
 export const isBrowser = () => {
   return typeof window !== "undefined" && typeof localStorage !== "undefined";
+};
+
+let _sonicConnection: Connection | null = null;
+export const getSonicConnection = () => {
+  if (_sonicConnection) {
+    return _sonicConnection;
+  }
+  const config = getConfig();
+  _sonicConnection = new Connection(config.sonicEndpoint, "confirmed");
+  return _sonicConnection;
 };

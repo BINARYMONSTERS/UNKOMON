@@ -7,7 +7,7 @@ import {
 } from "@metaplex-foundation/umi";
 import { mintToCollectionV1 } from "@metaplex-foundation/mpl-bubblegum";
 import { getConfig } from "./common";
-import { MerkleTree, Wallet } from "./type";
+import { ChainType, MerkleTree, Wallet } from "./type";
 import { uploadJson } from "./jsonbin";
 
 // Mint a new NFT to a collection
@@ -22,14 +22,17 @@ export const mintToCollection = async (
   collectionOwnerSecretKey: number[],
   name: string,
   assertUrl: string,
-  attributes: Record<string, string> = {}
+  attributes: Record<string, string> = {},
+  chainType: ChainType = "solana"
 ) => {
   // Generate and upload JSON metadata
   const jsonUrl = await uploadJson(name, name, assertUrl, attributes);
 
   const config = getConfig();
 
-  const umi = createUmi(config.endpoint);
+  const umi = createUmi(
+    chainType === "solana" ? config.endpoint : config.sonicEndpoint
+  );
 
   const secretKeyUInt8Array = new Uint8Array(wallet.secretKey);
   const payerKeypair =

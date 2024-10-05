@@ -3,19 +3,26 @@ import { keypairIdentity, generateSigner } from "@metaplex-foundation/umi";
 import { createTree } from "@metaplex-foundation/mpl-bubblegum";
 import { getConfig } from "./common";
 import { loadData, saveData } from "./storage";
-import { MerkleTree, Wallet } from "./type";
+import { ChainType, MerkleTree, Wallet } from "./type";
 
-const MERKLE_TREE_PUBLIC_KEY = "merkleTreePublicKey";
-const MERKLE_TREE_SECRET_KEY = "merkleTreeSecretKey";
+const SONALA_TREE_KEYS = {
+  public: "merkleTreePublicKey",
+  secret: "merkleTreeSecretKey",
+};
+
+const SONIC_TREE_KEYS = {
+  public: "sonicMerkleTreePublicKey",
+  secret: "sonicMerkleTreeSecretKey",
+};
 
 // Get Merkle tree
 // @return {
 //   publicKey: string,
 //   secretKey: number[],
 // } | null
-export const getMerkeTree = async () => {
-  const publicKey = await loadData(MERKLE_TREE_PUBLIC_KEY);
-  const secretKey = await loadData(MERKLE_TREE_SECRET_KEY);
+export const getMerkeTree = async (chainType: ChainType = "solana") => {
+  const publicKey = await loadData(getCacheKeys(chainType).public);
+  const secretKey = await loadData(getCacheKeys(chainType).secret);
   if (!publicKey || !secretKey) {
     return null;
   }
@@ -34,9 +41,14 @@ export const getMerkeTree = async () => {
 //   publicKey: string,
 //   secretKey: string,
 // }
-export const createMerkleTree = async (wallet: Wallet): Promise<MerkleTree> => {
+export const createMerkleTree = async (
+  wallet: Wallet,
+  chainType: ChainType = "solana"
+): Promise<MerkleTree> => {
   const config = getConfig();
-  const umi = createUmi(config.endpoint);
+  const umi = createUmi(
+    chainType === "solana" ? config.endpoint : config.sonicEndpoint
+  );
 
   const secretKeyUInt8Array = new Uint8Array(wallet.secretKey);
   const payerKeypair =
@@ -58,11 +70,18 @@ export const createMerkleTree = async (wallet: Wallet): Promise<MerkleTree> => {
   const publicKey = merkleTree.publicKey.toString();
   const secretKey = Array.from(merkleTree.secretKey);
 
-  await saveData(MERKLE_TREE_PUBLIC_KEY, publicKey);
-  await saveData(MERKLE_TREE_SECRET_KEY, secretKey);
+  await saveData(getCacheKeys(chainType).public, publicKey);
+  await saveData(getCacheKeys(chainType).secret, secretKey);
 
   return {
     publicKey,
     secretKey,
   };
+};
+
+const getCacheKeys = (chainType: ChainType) => {
+  if (chainType === "solana") {
+    return SONALA_TREE_KEYS;
+  }
+  return SONIC_TREE_KEYS;
 };

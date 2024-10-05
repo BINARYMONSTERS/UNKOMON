@@ -13,3 +13,5 @@ export type Collection = {
   publicKey: string;
   secretKey: number[];
 };
+
+export type ChainType = "solana" | "sonic";
