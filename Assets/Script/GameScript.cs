@@ -156,7 +156,7 @@ public class GameScript : MonoBehaviour
         Debug.Log(attributes);
         ChooseChain.SetActive(false);
 
-        if(WalletScript.SuccessMonsterMint == true)
+        if(WalletScript.SuccessMonsterMint == true || WalletScript.SuccessMonsterMint ==null)
         {
             return;
         }

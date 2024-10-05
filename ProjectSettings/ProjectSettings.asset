@@ -324,7 +324,7 @@ PlayerSettings:
   enableInternalProfiler: 0
   logObjCUncaughtExceptions: 1
   enableCrashReportAPI: 0
-  cameraUsageDescription: 
+  cameraUsageDescription: This app requires access to the camera to take photos.
   locationUsageDescription: 
   microphoneUsageDescription: 
   bluetoothUsageDescription: 

@@ -143,7 +143,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      websocket-sharp_icon_0: -3705080676159243141
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
