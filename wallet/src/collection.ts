@@ -9,7 +9,7 @@ import {
 import { createUmi } from "@metaplex-foundation/umi-bundle-defaults";
 import { createNft } from "@metaplex-foundation/mpl-token-metadata";
 import { saveData, loadData } from "./storage";
-import { getConfig } from "./common";
+import { getConfig, getConnection, getSonicConnection, wait } from "./common";
 import { ChainType, Collection, Wallet } from "./type";
 
 const COLLECTION_PUBLIC_KEY = "collectionPublicKey";
@@ -76,6 +76,8 @@ export const createCollectionWithoutCaching = async (
   chainType: ChainType = "solana"
 ) => {
   const config = getConfig();
+  const connection =
+    chainType === "solana" ? getConnection() : getSonicConnection();
   const umi = createUmi(
     chainType === "solana" ? config.endpoint : config.sonicEndpoint
   );
@@ -89,20 +91,55 @@ export const createCollectionWithoutCaching = async (
   const collectionUpdateAuthority = createSignerFromKeypair(umi, payerKeypair);
 
   const collectionMint = generateSigner(umi);
-  const result = await createNft(umi, {
+  const transactionBuilder = await createNft(umi, {
     mint: collectionMint,
     authority: collectionUpdateAuthority,
     name: name,
     uri: "https://example.com/my-collection.json",
     sellerFeeBasisPoints: percentAmount(5), // 5%
     isCollection: true,
-  }).sendAndConfirm(umi);
+  });
 
-  console.log(bs58.encode(result.signature));
+  const totalNumberOfRetries = 10;
+  let landed = false;
 
-  return {
+  const result = {
     publicKey: collectionMint.publicKey.toString(),
     secretKey: Array.from(collectionMint.secretKey),
-    signature: bs58.encode(result.signature),
+    signature: "",
   };
+
+  for (let i = 0; i < totalNumberOfRetries; i++) {
+    // Send the transaction without retry
+    const transactionSignature = await transactionBuilder.send(umi, {
+      skipPreflight: true,
+      maxRetries: 0,
+    });
+
+    await wait(5000);
+
+    // Check signature status
+    const sigStatus = await connection.getSignatureStatus(
+      bs58.encode(transactionSignature)
+    );
+
+    console.log(
+      "sigStatus",
+      sigStatus.value?.confirmationStatus,
+      sigStatus.context.slot
+    );
+    if (sigStatus.value?.confirmationStatus === "confirmed") {
+      console.log("landed");
+      console.log("Signature", bs58.encode(transactionSignature));
+      console.log("status", sigStatus);
+
+      result.signature = bs58.encode(transactionSignature);
+      landed = true;
+      break;
+    }
+
+    await wait(2000);
+  }
+
+  return result;
 };

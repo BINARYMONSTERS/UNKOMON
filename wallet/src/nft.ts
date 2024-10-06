@@ -6,7 +6,7 @@ import {
   publicKey,
 } from "@metaplex-foundation/umi";
 import { mintToCollectionV1 } from "@metaplex-foundation/mpl-bubblegum";
-import { getConfig } from "./common";
+import { getConfig, getConnection, getSonicConnection, wait } from "./common";
 import { ChainType, MerkleTree, Wallet } from "./type";
 import { uploadJson } from "./jsonbin";
 
@@ -27,8 +27,12 @@ export const mintToCollection = async (
 ) => {
   // Generate and upload JSON metadata
   const jsonUrl = await uploadJson(name, name, assertUrl, attributes);
+  console.log("jsonUrl", jsonUrl);
 
   const config = getConfig();
+
+  const connection =
+    chainType === "solana" ? getConnection() : getSonicConnection();
 
   const umi = createUmi(
     chainType === "solana" ? config.endpoint : config.sonicEndpoint
@@ -47,7 +51,7 @@ export const mintToCollection = async (
   );
   const collectionUpdateAuthority = createSignerFromKeypair(umi, ownerKeyPair);
 
-  const mintResult = await mintToCollectionV1(umi, {
+  const transactionBuilder = await mintToCollectionV1(umi, {
     leafOwner: payerKeypair.publicKey,
     merkleTree,
     collectionMint,
@@ -61,12 +65,46 @@ export const mintToCollection = async (
         { address: umi.identity.publicKey, verified: true, share: 100 },
       ],
     },
-  }).sendAndConfirm(umi);
+  });
+
+  const totalNumberOfRetries = 10;
+  let landed = false;
+  for (let i = 0; i < totalNumberOfRetries; i++) {
+    // Send the transaction without retry
+    const transactionSignature = await transactionBuilder.send(umi, {
+      skipPreflight: true,
+      maxRetries: 0,
+    });
+
+    await wait(5000);
+
+    // Check signature status
+    const sigStatus = await connection.getSignatureStatus(
+      bs58.encode(transactionSignature)
+    );
+
+    console.log(
+      "sigStatus",
+      sigStatus.value?.confirmationStatus,
+      sigStatus.context.slot
+    );
+    if (sigStatus.value?.confirmationStatus === "confirmed") {
+      console.log("landed");
+      console.log("Signature", bs58.encode(transactionSignature));
+      console.log("status", sigStatus);
+      landed = true;
+      break;
+    }
+
+    await wait(2000);
+  }
+
+  if (!landed) {
+    throw new Error("Transaction not landed, retry again");
+  }
 
   console.log("payer =>", payerKeypair.publicKey.toString());
   console.log("leafOwner =>", payerKeypair.publicKey.toString());
   console.log("merkleTree =>", merkleTree);
   console.log("collectionMint =>", collectionMint.toString());
-  console.log("signature =>", bs58.encode(mintResult.signature));
-  console.log("result =>", mintResult.result);
 };

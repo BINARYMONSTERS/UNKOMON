@@ -20,9 +20,9 @@ const test = () => __awaiter(void 0, void 0, void 0, function* () {
         power: "100",
         defense: "50",
     });
-    // await mintStoolData("Stool", "https://stool.com/image.png", {
-    //   color: "brown",
-    //   smell: "bad",
-    // });
+    yield (0, index_1.mintStoolData)("Stool", "https://stool.com/image.png", {
+        color: "brown",
+        smell: "bad",
+    });
 });
 test();

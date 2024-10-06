@@ -2,6 +2,7 @@ export type Wallet = {
   publicKey: string;
   secretKey: number[];
   sol: number;
+  sonic: number;
 };
 
 export type MerkleTree = {

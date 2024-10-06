@@ -13,13 +13,19 @@ exports.createMasterWallet = exports.getUserWallet = exports.createUserWallet = 
 const web3_js_1 = require("@solana/web3.js");
 const common_1 = require("./common");
 const storage_1 = require("./storage");
-const WALLET_PUBLIC_KEY = "walletPublicKey";
-const WALLET_SECRET_KEY = "walletSecretKey";
+const solanaUserWalletCacheKeys = {
+    public: "walletPublicKey",
+    secret: "walletSecretKey",
+};
+const sonicUserWalletCacheKeys = {
+    public: "sonicWalletPublicKey",
+    secret: "sonicWalletSecretKey",
+};
 // Get balance of the wallet
 // @param secretKey: number[]
 // @return number
-const getBalance = (srcSecretKey) => __awaiter(void 0, void 0, void 0, function* () {
-    const connection = (0, common_1.getConnection)();
+const getBalance = (srcSecretKey_1, ...args_1) => __awaiter(void 0, [srcSecretKey_1, ...args_1], void 0, function* (srcSecretKey, chainType = "solana") {
+    const connection = chainType === "solana" ? (0, common_1.getConnection)() : (0, common_1.getSonicConnection)();
     const secretKey = new Uint8Array(srcSecretKey);
     const myWallet = yield web3_js_1.Keypair.fromSecretKey(secretKey);
     const walletBalance = yield connection.getBalance(new web3_js_1.PublicKey(myWallet.publicKey));
@@ -28,11 +34,11 @@ const getBalance = (srcSecretKey) => __awaiter(void 0, void 0, void 0, function*
 exports.getBalance = getBalance;
 // Add fund to the wallet
 // @param secretKey: number[]
-const addFundToWallet = (srcSecretKey_1, ...args_1) => __awaiter(void 0, [srcSecretKey_1, ...args_1], void 0, function* (srcSecretKey, numberOfSol = 5) {
+const addFundToWallet = (srcSecretKey_1, ...args_1) => __awaiter(void 0, [srcSecretKey_1, ...args_1], void 0, function* (srcSecretKey, numberOfSol = 5, chainType = "solana") {
     // Airdrop SOL to the wallet
     console.log("Airdrop SOL to the wallet...");
     const secretKey = new Uint8Array(srcSecretKey);
-    const connection = (0, common_1.getConnection)();
+    const connection = chainType === "solana" ? (0, common_1.getConnection)() : (0, common_1.getSonicConnection)();
     const myWallet = yield web3_js_1.Keypair.fromSecretKey(secretKey);
     const fromAirDropSignature = yield connection.requestAirdrop(new web3_js_1.PublicKey(myWallet.publicKey), numberOfSol * web3_js_1.LAMPORTS_PER_SOL);
     yield connection.confirmTransaction(fromAirDropSignature);
@@ -46,7 +52,7 @@ exports.addFundToWallet = addFundToWallet;
 //   secretKey: number[],
 //   sol: number,
 // }
-const createUserWallet = () => __awaiter(void 0, void 0, void 0, function* () {
+const createUserWallet = (...args_1) => __awaiter(void 0, [...args_1], void 0, function* (chainType = "solana") {
     const config = (0, common_1.getConfig)();
     const keypair = web3_js_1.Keypair.generate();
     const wallet = {
@@ -54,8 +60,8 @@ const createUserWallet = () => __awaiter(void 0, void 0, void 0, function* () {
         secretKey: Array.from(keypair.secretKey),
     };
     // Save wallet to storage
-    yield (0, storage_1.saveData)(WALLET_PUBLIC_KEY, wallet.publicKey);
-    yield (0, storage_1.saveData)(WALLET_SECRET_KEY, wallet.secretKey);
+    yield (0, storage_1.saveData)(getUserWalletCacheKeys(chainType).public, wallet.publicKey);
+    yield (0, storage_1.saveData)(getUserWalletCacheKeys(chainType).secret, wallet.secretKey);
     if (!config.isDemo) {
         // Add fund to the wallet if it's not a demo
         yield (0, exports.addFundToWallet)(wallet.secretKey);
@@ -71,10 +77,10 @@ exports.createUserWallet = createUserWallet;
 //   secretKey: number[],
 //   sol: number,
 // } | null
-const getUserWallet = () => __awaiter(void 0, void 0, void 0, function* () {
+const getUserWallet = (...args_1) => __awaiter(void 0, [...args_1], void 0, function* (chainType = "solana") {
     // Check if the wallet is already created
-    const publicKey = yield (0, storage_1.loadData)(WALLET_PUBLIC_KEY);
-    let secretKey = yield (0, storage_1.loadData)(WALLET_SECRET_KEY);
+    const publicKey = yield (0, storage_1.loadData)(getUserWalletCacheKeys(chainType).public);
+    let secretKey = yield (0, storage_1.loadData)(getUserWalletCacheKeys(chainType).secret);
     if (!publicKey || !secretKey) {
         return null;
     }
@@ -99,3 +105,8 @@ const createMasterWallet = () => __awaiter(void 0, void 0, void 0, function* () 
     return Object.assign(Object.assign({}, wallet), { sol: balance });
 });
 exports.createMasterWallet = createMasterWallet;
+const getUserWalletCacheKeys = (chainType) => {
+    return chainType === "solana"
+        ? solanaUserWalletCacheKeys
+        : sonicUserWalletCacheKeys;
+};

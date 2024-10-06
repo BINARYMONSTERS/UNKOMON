@@ -65,9 +65,9 @@ const createCollection = (wallet, name) => __awaiter(void 0, void 0, void 0, fun
     };
 });
 exports.createCollection = createCollection;
-const createCollectionWithoutCaching = (wallet, name) => __awaiter(void 0, void 0, void 0, function* () {
+const createCollectionWithoutCaching = (wallet_1, name_1, ...args_1) => __awaiter(void 0, [wallet_1, name_1, ...args_1], void 0, function* (wallet, name, chainType = "solana") {
     const config = (0, common_1.getConfig)();
-    const umi = (0, umi_bundle_defaults_1.createUmi)(config.endpoint);
+    const umi = (0, umi_bundle_defaults_1.createUmi)(chainType === "solana" ? config.endpoint : config.sonicEndpoint);
     const secretKeyUInt8Array = new Uint8Array(wallet.secretKey);
     const payerKeypair = umi.eddsa.createKeypairFromSecretKey(secretKeyUInt8Array);
     umi.use((0, umi_1.keypairIdentity)(payerKeypair));

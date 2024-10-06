@@ -114,10 +114,12 @@ export const getUserWallet = async (
 
   // Get balance of the wallet
   const balance = await getBalance(wallet.secretKey);
+  const sonicBalance = await getBalance(wallet.secretKey, "sonic");
 
   return {
     ...wallet,
     sol: balance,
+    sonic: sonicBalance,
   };
 };
 
@@ -128,14 +130,17 @@ export const createMasterWallet = async (): Promise<Wallet> => {
     secretKey: Array.from(keypair.secretKey),
   };
 
-  await addFundToWallet(wallet.secretKey);
+  await addFundToWallet(wallet.secretKey, 5, "solana");
+  await addFundToWallet(wallet.secretKey, 0.5, "sonic");
 
   // Get balance of the wallet
-  const balance = await getBalance(wallet.secretKey);
+  const solanaBalance = await getBalance(wallet.secretKey);
+  const sonicBalance = await getBalance(wallet.secretKey, "sonic");
 
   return {
     ...wallet,
-    sol: balance,
+    sol: solanaBalance,
+    sonic: sonicBalance,
   };
 };
 

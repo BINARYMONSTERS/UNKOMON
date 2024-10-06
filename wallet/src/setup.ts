@@ -57,21 +57,21 @@ const setupSonic = async () => {
   // }
 
   // // Create collection for monsters
-  const monsterCollection = await createCollectionWithoutCaching(
-    wallet,
-    "Sonic monster collection",
-    "sonic"
-  );
-  console.log("monster collection", monsterCollection);
-
-  // // Create collection for stool
-  // const stoolCollection = await createCollectionWithoutCaching(
+  // const monsterCollection = await createCollectionWithoutCaching(
   //   wallet,
-  //   "Stool collection",
+  //   "Sonic monster collection",
   //   "sonic"
   // );
+  // console.log("monster collection", monsterCollection);
 
-  // console.log("stool collection", stoolCollection);
+  // Create collection for stool
+  const stoolCollection = await createCollectionWithoutCaching(
+    wallet,
+    "Stool collection",
+    "sonic"
+  );
+
+  console.log("stool collection", stoolCollection);
 };
 
 setupSonic();

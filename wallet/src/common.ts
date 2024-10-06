@@ -11,6 +11,11 @@ export const getConfig = () => {
     throw new Error("JSONBIN_ACCESS_KEY is not set");
   }
 
+  const jsonbinMasterKey = process.env.JSON_BIN_MASTER_KEY;
+  if (!jsonbinMasterKey) {
+    throw new Error("JSONBIN_MASTER_KEY is not set");
+  }
+
   const nftStorageApiKey = process.env.NFT_STORAGE_API_KEY;
   if (!nftStorageApiKey) {
     throw new Error("NFT_STORAGE_API_KEY is not set");
@@ -22,6 +27,7 @@ export const getConfig = () => {
     isDemo: true,
     nftStorageApiKey: nftStorageApiKey,
     jsonbinAccessKey: jsonbinAccessKey,
+    jsonBinMasterKey: jsonbinMasterKey,
     masterWallet: {
       publicKey: "ARAUZUHBikSY8dNGEVhRPS6u6pyykvbgyvQK2Vy285Td",
       secretKey: JSON.parse(masterWalletSecretKey),
@@ -32,6 +38,12 @@ export const getConfig = () => {
     },
     stoolCollection: {
       tokenAddress: "58cXHKskKBDLneAtM38cs8baA52MPL3ZqdvMS4wG7sqd",
+    },
+    sonicMonsterCollection: {
+      tokenAddress: "CC9VnjtQypuKqpZdBxhKjH6snXWYXiDC6NgHrVuYvi18",
+    },
+    sonicStoolCollection: {
+      tokenAddress: "B18WghpuwyQxVAbhXJ8gNyGt7ftiGDMfbodXN5VsxyYq",
     },
   };
 };
@@ -58,4 +70,8 @@ export const getSonicConnection = () => {
   const config = getConfig();
   _sonicConnection = new Connection(config.sonicEndpoint, "confirmed");
   return _sonicConnection;
+};
+
+export const wait = (ms: number) => {
+  return new Promise((resolve) => setTimeout(resolve, ms));
 };

@@ -24,11 +24,11 @@ const jsonbin_1 = require("./jsonbin");
 // @param merkleTreeInfo: { publicKey: string, secretKey: number[] }
 // @param collectionPublicKey: string
 // @param collectionOwnerSecretKey: number[]
-const mintToCollection = (wallet_1, merkleTreeInfo_1, collectionPublicKey_1, collectionOwnerSecretKey_1, name_1, assertUrl_1, ...args_1) => __awaiter(void 0, [wallet_1, merkleTreeInfo_1, collectionPublicKey_1, collectionOwnerSecretKey_1, name_1, assertUrl_1, ...args_1], void 0, function* (wallet, merkleTreeInfo, collectionPublicKey, collectionOwnerSecretKey, name, assertUrl, attributes = {}) {
+const mintToCollection = (wallet_1, merkleTreeInfo_1, collectionPublicKey_1, collectionOwnerSecretKey_1, name_1, assertUrl_1, ...args_1) => __awaiter(void 0, [wallet_1, merkleTreeInfo_1, collectionPublicKey_1, collectionOwnerSecretKey_1, name_1, assertUrl_1, ...args_1], void 0, function* (wallet, merkleTreeInfo, collectionPublicKey, collectionOwnerSecretKey, name, assertUrl, attributes = {}, chainType = "solana") {
     // Generate and upload JSON metadata
     const jsonUrl = yield (0, jsonbin_1.uploadJson)(name, name, assertUrl, attributes);
     const config = (0, common_1.getConfig)();
-    const umi = (0, umi_bundle_defaults_1.createUmi)(config.endpoint);
+    const umi = (0, umi_bundle_defaults_1.createUmi)(chainType === "solana" ? config.endpoint : config.sonicEndpoint);
     const secretKeyUInt8Array = new Uint8Array(wallet.secretKey);
     const payerKeypair = umi.eddsa.createKeypairFromSecretKey(secretKeyUInt8Array);
     umi.use((0, umi_1.keypairIdentity)(payerKeypair));

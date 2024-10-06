@@ -1,8 +1,4 @@
-import axios, {
-  AxiosResponse,
-  AxiosRequestConfig,
-  RawAxiosRequestHeaders,
-} from "axios";
+import axios, { RawAxiosRequestHeaders } from "axios";
 import { getConfig } from "./common";
 
 const BASE_URL = "https://api.jsonbin.io/v3";
@@ -12,10 +8,28 @@ const client = axios.create({
   baseURL: BASE_URL,
 });
 
-const header = (accessKey: string): RawAxiosRequestHeaders => ({
-  "Content-Type": "application/json",
-  "X-Access-Key": config.jsonbinAccessKey,
-});
+const header = ({
+  masterKey,
+  accessKey,
+  isPrivate,
+}: {
+  masterKey?: string;
+  accessKey?: string;
+  isPrivate?: boolean;
+}): RawAxiosRequestHeaders => {
+  const headers: RawAxiosRequestHeaders = {
+    "Content-Type": "application/json",
+  };
+  if (!masterKey && !accessKey) {
+    throw new Error("Master key or access key is required");
+  }
+
+  if (masterKey) headers["X-Master-Key"] = masterKey;
+  if (accessKey) headers["X-Access-Key"] = accessKey;
+  if (isPrivate) headers["X-Collection-Private"] = `${isPrivate}`;
+
+  return headers;
+};
 
 type JsonBinMetadata = {
   id: string;
@@ -43,9 +57,12 @@ export const uploadJson = async (
 
   try {
     const response = await client.post<JsonBinResponse>("/b", jsonBody, {
-      headers: header(config.jsonbinAccessKey),
+      headers: header({
+        masterKey: config.jsonBinMasterKey,
+        isPrivate: true,
+      }),
     });
-    return `${BASE_URL}/b/${response.data.metadata.id}`;
+    return `${BASE_URL}/b/${response.data.metadata.id}?meta=false`;
   } catch (error) {
     console.error("Error uploading JSON:", error);
     throw error;

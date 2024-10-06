@@ -1,8 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.isBrowser = exports.getConnection = exports.getConfig = void 0;
+exports.getSonicConnection = exports.isBrowser = exports.getConnection = exports.getConfig = void 0;
 const web3_js_1 = require("@solana/web3.js");
-let _connection = null;
 const getConfig = () => {
     const masterWalletSecretKey = process.env.MASTER_WALLET_SECRET_KEY;
     if (!masterWalletSecretKey) {
@@ -18,7 +17,7 @@ const getConfig = () => {
     }
     return {
         endpoint: process.env.SOLANA_ENDPOINT || "https://api.devnet.solana.com",
-        sonicEndpoint: process.env.SONIC_ENDPOINT || "https://rpc.testnet.soniclabs.com/",
+        sonicEndpoint: process.env.SONIC_ENDPOINT || "https://devnet.sonic.game",
         isDemo: true,
         nftStorageApiKey: nftStorageApiKey,
         jsonbinAccessKey: jsonbinAccessKey,
@@ -36,6 +35,7 @@ const getConfig = () => {
     };
 };
 exports.getConfig = getConfig;
+let _connection = null;
 const getConnection = () => {
     if (_connection) {
         return _connection;
@@ -49,3 +49,13 @@ const isBrowser = () => {
     return typeof window !== "undefined" && typeof localStorage !== "undefined";
 };
 exports.isBrowser = isBrowser;
+let _sonicConnection = null;
+const getSonicConnection = () => {
+    if (_sonicConnection) {
+        return _sonicConnection;
+    }
+    const config = (0, exports.getConfig)();
+    _sonicConnection = new web3_js_1.Connection(config.sonicEndpoint, "confirmed");
+    return _sonicConnection;
+};
+exports.getSonicConnection = getSonicConnection;
