@@ -4,6 +4,7 @@ import {
   mintMonsterNft,
   mintStoolData,
 } from "./index";
+import { addFundToWallet, getBalance } from "./wallet";
 import base58 from "bs58";
 
 const test = async () => {
@@ -12,7 +13,7 @@ const test = async () => {
     wallet = await createUserWallet();
   }
 
-  console.log("Wallet:", wallet);
+  console.log("wallet", wallet);
 
   console.log("Private key:", base58.encode(new Uint8Array(wallet.secretKey)));
 
@@ -22,7 +23,8 @@ const test = async () => {
     {
       power: "100",
       defense: "50",
-    }
+    },
+    "sonic"
   );
 
   // await mintStoolData("Stool", "https://stool.com/image.png", {

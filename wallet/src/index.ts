@@ -11,6 +11,7 @@ import { getMerkeTree, createMerkleTree } from "./merkle-tree";
 import { mintToCollection } from "./nft";
 import { getConfig } from "./common";
 import { BalanceNotEnoughError, WalletNotFoundError } from "./error";
+import { ChainType } from "./type";
 
 // Get user wallet information
 // @return {
@@ -43,7 +44,8 @@ export async function createUserWallet() {
 export async function mintMonsterNft(
   name: string,
   imageUrl: string,
-  attributes: Record<string, string>
+  attributes: Record<string, string>,
+  chainType: ChainType = "solana"
 ) {
   const config = getConfig();
   const wallet = await getUserWallet();
@@ -51,14 +53,14 @@ export async function mintMonsterNft(
     throw new WalletNotFoundError("Wallet not found");
   }
 
-  const balance = await getBalanceInternal(wallet.secretKey);
-  if (balance === 0) {
+  const balance = await getBalanceInternal(wallet.secretKey, chainType);
+  if (balance <= 0) {
     throw new BalanceNotEnoughError("Balance is not enough to mint NFT");
   }
 
-  let merkleTree = await getMerkeTree();
+  let merkleTree = await getMerkeTree(chainType);
   if (!merkleTree) {
-    merkleTree = await createMerkleTree(wallet);
+    merkleTree = await createMerkleTree(wallet, chainType);
   }
 
   let retries = 0;
@@ -71,7 +73,8 @@ export async function mintMonsterNft(
         config.masterWallet.secretKey,
         name,
         imageUrl,
-        attributes
+        attributes,
+        chainType
       );
       break;
     } catch (error) {
@@ -88,7 +91,8 @@ export async function mintMonsterNft(
 export async function mintStoolData(
   name: string,
   imageUrl: string,
-  attributes: Record<string, string>
+  attributes: Record<string, string>,
+  chainType: ChainType = "solana"
 ) {
   const config = getConfig();
   const wallet = await getUserWallet();
@@ -97,14 +101,14 @@ export async function mintStoolData(
     throw new WalletNotFoundError("Wallet not found");
   }
 
-  const balance = await getBalanceInternal(wallet.secretKey);
+  const balance = await getBalanceInternal(wallet.secretKey, chainType);
   if (balance === 0) {
     throw new BalanceNotEnoughError("Balance is not enough to mint NFT");
   }
 
-  let merkleTree = await getMerkeTree();
+  let merkleTree = await getMerkeTree(chainType);
   if (!merkleTree) {
-    merkleTree = await createMerkleTree(wallet);
+    merkleTree = await createMerkleTree(wallet, chainType);
   }
 
   let retries = 0;
@@ -118,7 +122,8 @@ export async function mintStoolData(
         config.masterWallet.secretKey,
         name,
         imageUrl,
-        attributes
+        attributes,
+        chainType
       );
       break;
     } catch (error) {

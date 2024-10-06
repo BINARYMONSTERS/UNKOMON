@@ -1,7 +1,8 @@
 import { createUmi } from "@metaplex-foundation/umi-bundle-defaults";
+import bs58 from "bs58";
 import { keypairIdentity, generateSigner } from "@metaplex-foundation/umi";
 import { createTree } from "@metaplex-foundation/mpl-bubblegum";
-import { getConfig } from "./common";
+import { getConfig, getConnection, getSonicConnection, wait } from "./common";
 import { loadData, saveData } from "./storage";
 import { ChainType, MerkleTree, Wallet } from "./type";
 
@@ -46,6 +47,8 @@ export const createMerkleTree = async (
   chainType: ChainType = "solana"
 ): Promise<MerkleTree> => {
   const config = getConfig();
+  const connection =
+    chainType === "solana" ? getConnection() : getSonicConnection();
   const umi = createUmi(
     chainType === "solana" ? config.endpoint : config.sonicEndpoint
   );
@@ -65,7 +68,44 @@ export const createMerkleTree = async (
     maxBufferSize: 64,
   });
 
-  await builder.sendAndConfirm(umi);
+  console.log("Start creating Merkle tree...");
+
+  const totalNumberOfRetries = 10;
+  let landed = false;
+  for (let i = 0; i < totalNumberOfRetries; i++) {
+    try {
+      const signature = await builder.send(umi, {
+        skipPreflight: true,
+        maxRetries: 0,
+      });
+
+      await wait(5000);
+
+      // Check signature status
+      const status = await connection.getSignatureStatus(
+        bs58.encode(signature)
+      );
+
+      console.log(
+        "sigStatus",
+        status.value?.confirmationStatus,
+        status.context.slot
+      );
+      console.log("signature", signature);
+
+      if (status.value?.confirmationStatus === "confirmed") {
+        console.log("landed");
+        console.log("Signature", bs58.encode(signature));
+        console.log("status", status);
+        landed = true;
+        break;
+      }
+
+      await wait(2000);
+    } catch (err) {
+      console.log("Error in createMerkleTree", err);
+    }
+  }
 
   const publicKey = merkleTree.publicKey.toString();
   const secretKey = Array.from(merkleTree.secretKey);

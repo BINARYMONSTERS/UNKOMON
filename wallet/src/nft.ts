@@ -27,8 +27,6 @@ export const mintToCollection = async (
 ) => {
   // Generate and upload JSON metadata
   const jsonUrl = await uploadJson(name, name, assertUrl, attributes);
-  console.log("jsonUrl", jsonUrl);
-
   const config = getConfig();
 
   const connection =
@@ -84,9 +82,10 @@ export const mintToCollection = async (
     );
 
     console.log(
-      "sigStatus",
+      "sigStatus and signature",
       sigStatus.value?.confirmationStatus,
-      sigStatus.context.slot
+      sigStatus.context.slot,
+      bs58.encode(transactionSignature)
     );
     if (sigStatus.value?.confirmationStatus === "confirmed") {
       console.log("landed");
