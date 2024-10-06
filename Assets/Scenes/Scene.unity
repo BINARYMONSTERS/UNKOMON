@@ -14520,7 +14520,7 @@ MonoBehaviour:
     - {fileID: 583706694, guid: 125aec2fc76c71f40a4e916ba42cff24, type: 3}
     - {fileID: 700009922, guid: 125aec2fc76c71f40a4e916ba42cff24, type: 3}
     - {fileID: -518206896, guid: 125aec2fc76c71f40a4e916ba42cff24, type: 3}
-    ImageURL: https://example.oi/stool/photo_1010.jpg
+    ImageURL: https://i.postimg.cc/7YDrYnh0/UNKOcard-01.png
   - ID: 1
     HP: 100
     MaxHP: 100
@@ -14535,7 +14535,7 @@ MonoBehaviour:
     - {fileID: -1984822938, guid: be3142bb7771e564fa20ee452f133894, type: 3}
     - {fileID: -1392108292, guid: be3142bb7771e564fa20ee452f133894, type: 3}
     - {fileID: -1423792374, guid: be3142bb7771e564fa20ee452f133894, type: 3}
-    ImageURL: https://example.oi/stool/photo_1010.jpg
+    ImageURL: ' https://i.postimg.cc/N00HhXRw/UNKOcard-02.png'
   - ID: 7
     HP: 160
     MaxHP: 160
@@ -14550,7 +14550,7 @@ MonoBehaviour:
     - {fileID: 1341778682, guid: 8c81ca975b9bb32499cc10e51227ce11, type: 3}
     - {fileID: 1044150380, guid: 8c81ca975b9bb32499cc10e51227ce11, type: 3}
     - {fileID: 1589685581, guid: 8c81ca975b9bb32499cc10e51227ce11, type: 3}
-    ImageURL: https://example.oi/stool/photo_1010.jpg
+    ImageURL: https://i.postimg.cc/nh3X1LgS/UNKOcard-07.png
   CurrentMonster:
     ID: 0
     HP: 240
@@ -14843,6 +14843,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f5cef644acd0a4409e69e79346638a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SuccessMonsterMint: 1
   walletInfo:
     publicKey: 
     secretKey: 
