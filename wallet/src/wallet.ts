@@ -88,6 +88,7 @@ export const createUserWallet = async (
   return {
     ...wallet,
     sol: balance / LAMPORTS_PER_SOL,
+    sonic: 0,
   };
 };
 

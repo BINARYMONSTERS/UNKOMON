@@ -26,7 +26,7 @@ const header = ({
 
   if (masterKey) headers["X-Master-Key"] = masterKey;
   if (accessKey) headers["X-Access-Key"] = accessKey;
-  if (isPrivate) headers["X-Collection-Private"] = `${isPrivate}`;
+  if (isPrivate != undefined) headers["X-Bin-Private"] = `${isPrivate}`;
 
   return headers;
 };
@@ -59,7 +59,7 @@ export const uploadJson = async (
     const response = await client.post<JsonBinResponse>("/b", jsonBody, {
       headers: header({
         masterKey: config.jsonBinMasterKey,
-        isPrivate: true,
+        isPrivate: false,
       }),
     });
     return `${BASE_URL}/b/${response.data.metadata.id}?meta=false`;

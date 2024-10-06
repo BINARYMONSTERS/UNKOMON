@@ -32,6 +32,7 @@ export const getConfig = () => {
       publicKey: "ARAUZUHBikSY8dNGEVhRPS6u6pyykvbgyvQK2Vy285Td",
       secretKey: JSON.parse(masterWalletSecretKey),
       sol: 5,
+      sonic: 0,
     },
     monsterCollection: {
       tokenAddress: "8hmmwAjMC1hiePf3T4P9z4ETEcgaNsCB4WEVbuE1N8ra",
