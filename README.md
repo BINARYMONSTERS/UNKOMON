@@ -22,20 +22,20 @@ Libraries:
 
 ### Build and start local server
 1. Clone this repository
-1. Go to the `wallet` folder
+2. Go to the `wallet` folder
 ```sh
 $ cd wallet
 ```
-1. Create `.env` file under `wallet` folder (For `.env` file content, please contract the author)
-1. Run npm install to download required packages. (Install [npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm) first if it is not installed)
+3. Create `.env` file under `wallet` folder (For `.env` file content, please contract the author)
+4. Run npm install to download required packages. (Install [npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm) first if it is not installed)
 ```sh
 $ npm install
 ```
-1. Run npm start to launch the local server.
+5. Run npm start to launch the local server.
 ```sh
 $ npm start
 ```
-1. Once the server is running, start the unity application.
+6. Once the server is running, start the unity application.
 
 ### Setup and run unity app (MacOS only)
 1. Navigate to Demo for Mac [folder](https://github.com/BINARYMONSTERS/UNKOMON/tree/main/Demo%20for%20Mac)
