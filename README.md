@@ -19,21 +19,38 @@ Libraries:
 - [Metaplex](https://github.com/metaplex-foundation/metaplex)
 
 ## Steps to Run
-1. Download all files from GitHub.
+
+### Build and start local server
+1. Clone this repository
 
 2. Go to the "wallet" folder.
-
-3. Open the command prompt or terminal.
-
-4. Run npm install to download required packages.
+```sh
+$ cd wallet
+```
+3. Run npm install to download required packages. (Install [npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm) first if it is not installed)
+```sh
+$ npm install
+```
 
 5. Run npm start to launch the local server.
+```sh
+$ npm start
+```
+6. Once the server is running, start the unity application.
 
-6. Once the server is running, start the demo.
-
-## Setup
-
-## Run
+### Setup and run unity app (MacOS only)
+1. Navigate to Demo for Mac [folder](https://github.com/BINARYMONSTERS/UNKOMON/tree/main/Demo%20for%20Mac)
+2. Extract `UNKOMON.zip`
+3. Copy `UNKOMON.app` into Application folder
+```sh
+$ cd Demo\ for\ Mac/
+$ cp UNKOMON ~/Applications
+```
+4. Change permission for UNKOMON app
+```sh
+$ chmod a+x ~/Applications/UNKOMON.app/Contents/MacOS/*
+```
+5. Start the application
 
 ## Q&A
 ### Why can’t it run on mobile?
