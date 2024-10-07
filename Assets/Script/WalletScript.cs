@@ -48,6 +48,34 @@ public class WalletScript : MonoBehaviour
         }
     }
 
+    public IEnumerator MintMonsterSonic(string name, string imageUrl, string attributesJson)
+    {
+        yield return MintMonsterSonicCoroutine(name, imageUrl, attributesJson);
+    }
+
+    IEnumerator MintMonsterSonicCoroutine(string name, string imageUrl, string attributesJson)
+    {
+        string url = "http://localhost:3000/api/mint-sonic-monster";
+        WWWForm form = new WWWForm();
+        form.AddField("name", name);
+        form.AddField("imageUrl", imageUrl);
+        form.AddField("attributes", attributesJson);
+
+        UnityWebRequest request = UnityWebRequest.Post(url, form);
+        yield return request.SendWebRequest();
+
+        if (request.result != UnityWebRequest.Result.Success)
+        {
+            SuccessMonsterMint = false;
+            Debug.LogError("Error: " + request.error);
+        }
+        else
+        {
+            SuccessMonsterMint = true;
+            Debug.Log("Monster NFT minted successfully: " + request.downloadHandler.text);
+        }
+    }
+
     public void MintStoolNFT(string name, string imageUrl, string attributesJson)
     {
         StartCoroutine(MintStoolNFTCoroutine(name, imageUrl, attributesJson));

@@ -168,7 +168,20 @@ public class GameScript : MonoBehaviour
 
     public void SendSonic()
     {
+        StartCoroutine(Sonic());
+    }
+
+    IEnumerator Sonic()
+    {
+        string attributes = "HP:" + AllMonsters[currentID].HP + " PoopRate:" + AllMonsters[currentID].PoopRate;
+        yield return WalletScript.MintMonsterSonic(AllMonsters[currentID].ID.ToString(), AllMonsters[currentID].ImageURL.ToString(), attributes);
+        Debug.Log(attributes);
         ChooseChain.SetActive(false);
+
+        if (WalletScript.SuccessMonsterMint == false)
+        {
+            NoGAS.SetActive(true);
+        }
     }
 
 
