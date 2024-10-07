@@ -22,19 +22,15 @@ Libraries:
 
 ### Build and start local server
 1. Clone this repository
-
 1. Go to the `wallet` folder
 ```sh
 $ cd wallet
 ```
-1. Create `.env` file under `wallet` folder
-  1. For `.env` file content, please contract the author   
-
+1. Create `.env` file under `wallet` folder (For `.env` file content, please contract the author)
 1. Run npm install to download required packages. (Install [npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm) first if it is not installed)
 ```sh
 $ npm install
 ```
-
 1. Run npm start to launch the local server.
 ```sh
 $ npm start
