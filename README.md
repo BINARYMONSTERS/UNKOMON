@@ -37,7 +37,7 @@ $ npm start
 ```
 6. Once the server is running, start the unity application.
 
-### Setup and run unity app (MacOS only)
+### Setup and run unity app (For MacOS)
 1. Navigate to Demo for Mac [folder](https://github.com/BINARYMONSTERS/UNKOMON/tree/main/Demo%20for%20Mac)
 2. Extract `UNKOMON.zip`
 3. Copy `UNKOMON.app` into Application folder
@@ -50,6 +50,11 @@ $ cp UNKOMON ~/Applications
 $ chmod a+x ~/Applications/UNKOMON.app/Contents/MacOS/*
 ```
 5. Start the application
+
+### Setup and run unity app (For Windows)
+1. Navigate to Demo for Windows [folder](https://github.com/BINARYMONSTERS/UNKOMON/tree/main/Demo%20For%20Windows)
+2. Extract `UNKOMON.zip`
+3. Run the executable file
 
 ## Q&A
 ### Why can’t it run on mobile?
