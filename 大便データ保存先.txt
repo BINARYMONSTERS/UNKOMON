@@ -1,6 +1,0 @@
-大便データ保存先
-
-Windows: C:\Users\<username>\AppData\LocalLow\<CompanyName>\<ProductName>\
-macOS: /Users/<username>/Library/Application Support/<CompanyName>/<ProductName>/
-Android: /storage/emulated/0/Android/data/<package-name>/files/
-iOS: <App_Home>/Documents/
