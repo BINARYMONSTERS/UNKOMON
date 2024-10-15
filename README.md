@@ -22,23 +22,22 @@ Libraries:
 
 ### Build and start local server
 1. Clone this repository
-
-2. Go to the "wallet" folder.
+2. Go to the `wallet` folder
 ```sh
 $ cd wallet
 ```
-3. Run npm install to download required packages. (Install [npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm) first if it is not installed)
+3. Create `.env` file under `wallet` folder (For `.env` file content, please contract the author)
+4. Run npm install to download required packages. (Install [npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm) first if it is not installed)
 ```sh
 $ npm install
 ```
-
 5. Run npm start to launch the local server.
 ```sh
 $ npm start
 ```
 6. Once the server is running, start the unity application.
 
-### Setup and run unity app (MacOS only)
+### Setup and run unity app (For MacOS)
 1. Navigate to Demo for Mac [folder](https://github.com/BINARYMONSTERS/UNKOMON/tree/main/Demo%20for%20Mac)
 2. Extract `UNKOMON.zip`
 3. Copy `UNKOMON.app` into Application folder
@@ -51,6 +50,11 @@ $ cp UNKOMON ~/Applications
 $ chmod a+x ~/Applications/UNKOMON.app/Contents/MacOS/*
 ```
 5. Start the application
+
+### Setup and run unity app (For Windows)
+1. Navigate to Demo for Windows [folder](https://github.com/BINARYMONSTERS/UNKOMON/tree/main/Demo%20For%20Windows)
+2. Extract `UNKOMON.zip`
+3. Run the executable file
 
 ## Q&A
 ### Why can’t it run on mobile?
