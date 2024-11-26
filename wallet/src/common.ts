@@ -1,6 +1,7 @@
 import { Connection } from "@solana/web3.js";
+import { ChainType, Config } from "./type";
 
-export const getConfig = () => {
+export const getConfig = (): Config => {
   const masterWalletSecretKey = process.env.MASTER_WALLET_SECRET_KEY;
   if (!masterWalletSecretKey) {
     throw new Error("MASTER_WALLET_SECRET_KEY is not set");
@@ -24,6 +25,8 @@ export const getConfig = () => {
   return {
     endpoint: process.env.SOLANA_ENDPOINT || "https://api.devnet.solana.com",
     sonicEndpoint: process.env.SONIC_ENDPOINT || "https://devnet.sonic.game",
+    soonEndpoint:
+      process.env.SOON_ENDPOINT || "https://rpc.testnet.soo.network/rpc",
     isDemo: true,
     nftStorageApiKey: nftStorageApiKey,
     jsonbinAccessKey: jsonbinAccessKey,
@@ -33,6 +36,7 @@ export const getConfig = () => {
       secretKey: JSON.parse(masterWalletSecretKey),
       sol: 5,
       sonic: 0,
+      soon: 0,
     },
     monsterCollection: {
       tokenAddress: "8hmmwAjMC1hiePf3T4P9z4ETEcgaNsCB4WEVbuE1N8ra",
@@ -45,6 +49,12 @@ export const getConfig = () => {
     },
     sonicStoolCollection: {
       tokenAddress: "B18WghpuwyQxVAbhXJ8gNyGt7ftiGDMfbodXN5VsxyYq",
+    },
+    soonMonsterCollection: {
+      tokenAddress: "", // TBD
+    },
+    soonStoolCollection: {
+      tokenAddress: "", // TBD
     },
   };
 };
@@ -73,6 +83,45 @@ export const getSonicConnection = () => {
   return _sonicConnection;
 };
 
+let _soonConnection: Connection | null = null;
+export const getSoonConnection = () => {
+  if (_soonConnection) {
+    return _soonConnection;
+  }
+  const config = getConfig();
+  _soonConnection = new Connection(config.soonEndpoint, "confirmed");
+  return _soonConnection;
+};
+
 export const wait = (ms: number) => {
   return new Promise((resolve) => setTimeout(resolve, ms));
+};
+
+export const getConnectionByChainType = (chainType: ChainType): Connection => {
+  switch (chainType) {
+    case "solana":
+      return getConnection();
+    case "sonic":
+      return getSonicConnection();
+    case "soon":
+      return getSoonConnection();
+    default:
+      throw new Error(`Unsupported chain type: ${chainType}`);
+  }
+};
+
+export const getEndpointByChainType = (
+  config: Config,
+  chainType: ChainType
+): string => {
+  switch (chainType) {
+    case "solana":
+      return config.endpoint;
+    case "sonic":
+      return config.sonicEndpoint;
+    case "soon":
+      return config.soonEndpoint;
+    default:
+      throw new Error(`Unsupported chain type: ${chainType}`);
+  }
 };

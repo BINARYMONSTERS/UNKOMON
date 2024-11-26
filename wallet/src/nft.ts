@@ -6,7 +6,14 @@ import {
   publicKey,
 } from "@metaplex-foundation/umi";
 import { mintToCollectionV1 } from "@metaplex-foundation/mpl-bubblegum";
-import { getConfig, getConnection, getSonicConnection, wait } from "./common";
+import {
+  getConfig,
+  getConnection,
+  getConnectionByChainType,
+  getEndpointByChainType,
+  getSonicConnection,
+  wait,
+} from "./common";
 import { ChainType, MerkleTree, Wallet } from "./type";
 import { uploadJson } from "./jsonbin";
 
@@ -29,12 +36,9 @@ export const mintToCollection = async (
   const jsonUrl = await uploadJson(name, name, assertUrl, attributes);
   const config = getConfig();
 
-  const connection =
-    chainType === "solana" ? getConnection() : getSonicConnection();
+  const connection = getConnectionByChainType(chainType);
 
-  const umi = createUmi(
-    chainType === "solana" ? config.endpoint : config.sonicEndpoint
-  );
+  const umi = createUmi(getEndpointByChainType(config, chainType));
 
   const secretKeyUInt8Array = new Uint8Array(wallet.secretKey);
   const payerKeypair =

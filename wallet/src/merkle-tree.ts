@@ -2,9 +2,17 @@ import { createUmi } from "@metaplex-foundation/umi-bundle-defaults";
 import bs58 from "bs58";
 import { keypairIdentity, generateSigner } from "@metaplex-foundation/umi";
 import { createTree } from "@metaplex-foundation/mpl-bubblegum";
-import { getConfig, getConnection, getSonicConnection, wait } from "./common";
+import {
+  getConfig,
+  getConnection,
+  getConnectionByChainType,
+  getEndpointByChainType,
+  getSonicConnection,
+  wait,
+} from "./common";
 import { loadData, saveData } from "./storage";
 import { ChainType, MerkleTree, Wallet } from "./type";
+import { Connection } from "@solana/web3.js";
 
 const SONALA_TREE_KEYS = {
   public: "merkleTreePublicKey",
@@ -14,6 +22,11 @@ const SONALA_TREE_KEYS = {
 const SONIC_TREE_KEYS = {
   public: "sonicMerkleTreePublicKey",
   secret: "sonicMerkleTreeSecretKey",
+};
+
+const SOON_TREE_KEYS = {
+  public: "soonMerkleTreePublicKey",
+  secret: "soonMerkleTreeSecretKey",
 };
 
 // Get Merkle tree
@@ -47,11 +60,8 @@ export const createMerkleTree = async (
   chainType: ChainType = "solana"
 ): Promise<MerkleTree> => {
   const config = getConfig();
-  const connection =
-    chainType === "solana" ? getConnection() : getSonicConnection();
-  const umi = createUmi(
-    chainType === "solana" ? config.endpoint : config.sonicEndpoint
-  );
+  const connection = getConnectionByChainType(chainType);
+  const umi = createUmi(getEndpointByChainType(config, chainType));
 
   const secretKeyUInt8Array = new Uint8Array(wallet.secretKey);
   const payerKeypair =
@@ -120,8 +130,14 @@ export const createMerkleTree = async (
 };
 
 const getCacheKeys = (chainType: ChainType) => {
-  if (chainType === "solana") {
-    return SONALA_TREE_KEYS;
+  switch (chainType) {
+    case "solana":
+      return SONALA_TREE_KEYS;
+    case "sonic":
+      return SONIC_TREE_KEYS;
+    case "soon":
+      return SOON_TREE_KEYS;
+    default:
+      throw new Error(`Unsupported chain type: ${chainType}`);
   }
-  return SONIC_TREE_KEYS;
 };

@@ -76,6 +76,19 @@ app.post(
   }
 );
 
+app.post(
+  "/api/mint-soon-monster",
+  async (req: Request, res: Response): Promise<void> => {
+    const { name, imageUrl, attributes } = req.body;
+    try {
+      await mintMonsterNft(name, imageUrl, attributes, "soon");
+      res.json({ status: "Monster NFT minted successfully" });
+    } catch (error: any) {
+      res.status(500).json({ error: error.message });
+    }
+  }
+);
+
 // Mint stool data NFT endpoint
 app.post(
   "/api/mint-stool",

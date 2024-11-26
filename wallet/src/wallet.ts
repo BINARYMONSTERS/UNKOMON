@@ -1,5 +1,10 @@
 import { Keypair, PublicKey, LAMPORTS_PER_SOL } from "@solana/web3.js";
-import { getConfig, getConnection, getSonicConnection } from "./common";
+import {
+  getConfig,
+  getConnection,
+  getConnectionByChainType,
+  getSonicConnection,
+} from "./common";
 import { saveData, loadData } from "./storage";
 import { ChainType, Wallet } from "./type";
 
@@ -13,6 +18,11 @@ const sonicUserWalletCacheKeys = {
   secret: "sonicWalletSecretKey",
 };
 
+const soonUserWalletCacheKeys = {
+  public: "soonWalletPublicKey",
+  secret: "soonWalletSecretKey",
+};
+
 // Get balance of the wallet
 // @param secretKey: number[]
 // @return number
@@ -20,8 +30,7 @@ export const getBalance = async (
   srcSecretKey: number[],
   chainType: ChainType = "solana"
 ) => {
-  const connection =
-    chainType === "solana" ? getConnection() : getSonicConnection();
+  const connection = getConnectionByChainType(chainType);
   const secretKey = new Uint8Array(srcSecretKey);
   const myWallet = await Keypair.fromSecretKey(secretKey);
   const walletBalance = await connection.getBalance(
@@ -42,8 +51,7 @@ export const addFundToWallet = async (
   console.log("Airdrop SOL to the wallet...");
 
   const secretKey = new Uint8Array(srcSecretKey);
-  const connection =
-    chainType === "solana" ? getConnection() : getSonicConnection();
+  const connection = getConnectionByChainType(chainType);
   const myWallet = await Keypair.fromSecretKey(secretKey);
 
   const fromAirDropSignature = await connection.requestAirdrop(
@@ -89,6 +97,7 @@ export const createUserWallet = async (
     ...wallet,
     sol: balance / LAMPORTS_PER_SOL,
     sonic: 0,
+    soon: 0,
   };
 };
 
@@ -116,11 +125,13 @@ export const getUserWallet = async (
   // Get balance of the wallet
   const balance = await getBalance(wallet.secretKey);
   const sonicBalance = await getBalance(wallet.secretKey, "sonic");
+  const soonBalance = await getBalance(wallet.secretKey, "soon");
 
   return {
     ...wallet,
     sol: balance,
     sonic: sonicBalance,
+    soon: soonBalance,
   };
 };
 
@@ -133,20 +144,30 @@ export const createMasterWallet = async (): Promise<Wallet> => {
 
   await addFundToWallet(wallet.secretKey, 5, "solana");
   await addFundToWallet(wallet.secretKey, 0.5, "sonic");
+  await addFundToWallet(wallet.secretKey, 0.5, "soon");
 
   // Get balance of the wallet
   const solanaBalance = await getBalance(wallet.secretKey);
   const sonicBalance = await getBalance(wallet.secretKey, "sonic");
+  const soonBalance = await getBalance(wallet.secretKey, "soon");
 
   return {
     ...wallet,
     sol: solanaBalance,
     sonic: sonicBalance,
+    soon: soonBalance,
   };
 };
 
 const getUserWalletCacheKeys = (chainType: ChainType) => {
-  return chainType === "solana"
-    ? solanaUserWalletCacheKeys
-    : sonicUserWalletCacheKeys;
+  switch (chainType) {
+    case "solana":
+      return solanaUserWalletCacheKeys;
+    case "sonic":
+      return sonicUserWalletCacheKeys;
+    case "soon":
+      return soonUserWalletCacheKeys;
+    default:
+      throw new Error(`Unsupported chain type: ${chainType}`);
+  }
 };
